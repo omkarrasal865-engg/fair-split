@@ -50,15 +50,37 @@ Rules:
 6. Extract ownership rules.
 7. Extract exclusion rules.
 8. Extract payment information.
-9. Do not calculate money.
-10. Do not infer item prices.
-11. Preserve item references exactly as described.
-12. If a value is unknown, use null.
-13. Treat references such as "I", "me", and "my" as "User".
-14. Include the original description in raw_description.
-15. If the description implies all remaining items should be split among everyone
+9. Extract quantity-consumption information when explicitly mentioned.
+10. Do not calculate money.
+11. Do not infer item prices.
+12. Preserve item references exactly as described.
+13. If a value is unknown, use null.
+14. Treat references such as "I", "me", and "my" as "User".
+15. Include the original description in raw_description.
+16. If the description implies all remaining items should be split among everyone
     (e.g. "split everything else equally", "share the rest"),
     set shared_remaining_items = true.
+17. Quantity rules should only be created when the description explicitly
+    mentions how many units a person consumed.
+
+Examples:
+
+"Aman drank 3 beers. Priya drank 1 beer."
+
+should produce:
+
+[
+  {
+    "item": "beer",
+    "person": "Aman",
+    "quantity": 3
+  },
+  {
+    "item": "beer",
+    "person": "Priya",
+    "quantity": 1
+  }
+]
 
 Return JSON in exactly this format:
 
@@ -87,6 +109,14 @@ Return JSON in exactly this format:
     {
       "person": "Priya",
       "amount": null
+    }
+  ],
+
+  "item_quantity_rules": [
+    {
+      "item": "beer",
+      "person": "Aman",
+      "quantity": 3
     }
   ],
 

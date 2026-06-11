@@ -4,10 +4,12 @@ from app.models.rules import (
     OwnershipRule,
     ExclusionRule,
     PaymentRule,
+    ItemQuantityRule,
 )
 
 
 class RulesValidator:
+
     def validate(
         self,
         raw_rules: RawRulesExtraction
@@ -89,6 +91,30 @@ class RulesValidator:
                 )
             )
 
+        valid_quantity_rules = []
+
+        for rule in raw_rules.item_quantity_rules:
+
+            if rule.person not in participant_set:
+                flags.append(
+                    f"Quantity rule references unknown participant "
+                    f"'{rule.person}'."
+                )
+
+            if rule.quantity <= 0:
+                flags.append(
+                    f"Quantity for item '{rule.item}' must be greater than zero."
+                )
+                continue
+
+            valid_quantity_rules.append(
+                ItemQuantityRule(
+                    item=rule.item,
+                    person=rule.person,
+                    quantity=rule.quantity,
+                )
+            )
+
         if not valid_payments:
             assumptions.append(
                 "No payer explicitly mentioned."
@@ -99,6 +125,7 @@ class RulesValidator:
             ownership_rules=valid_ownership_rules,
             exclusion_rules=valid_exclusion_rules,
             payments=valid_payments,
+            item_quantity_rules=valid_quantity_rules,
             shared_remaining_items=
                 raw_rules.shared_remaining_items,
             assumptions=assumptions,

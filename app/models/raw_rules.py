@@ -15,6 +15,10 @@ class PaymentRule(BaseModel):
     person: str
     amount: float | None = None
 
+class ItemQuantityRule(BaseModel):
+    item: str
+    person: str
+    quantity: float
 
 class RawRulesExtraction(BaseModel):
     participants: list[str]
@@ -26,5 +30,7 @@ class RawRulesExtraction(BaseModel):
     payments: list[PaymentRule]
 
     shared_remaining_items: bool = False
+
+    item_quantity_rules: list[ItemQuantityRule] = []
 
     raw_description: str

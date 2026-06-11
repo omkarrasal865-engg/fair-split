@@ -6,6 +6,7 @@ from app.models.raw_rules import RawRulesExtraction
 
 
 class RulesExtractor:
+
     def __init__(self):
         self.client = GeminiClient()
 
@@ -31,22 +32,32 @@ Description:
                 "participants",
                 [],
             ),
+
             ownership_rules=data.get(
                 "ownership_rules",
                 [],
             ),
+
             exclusion_rules=data.get(
                 "exclusion_rules",
                 [],
             ),
+
             payments=data.get(
                 "payments",
                 [],
             ),
+
+            item_quantity_rules=data.get(
+                "item_quantity_rules",
+                [],
+            ),
+
             shared_remaining_items=data.get(
                 "shared_remaining_items",
                 False,
             ),
+
             raw_description=data.get(
                 "raw_description",
                 description,

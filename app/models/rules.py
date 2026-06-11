@@ -16,6 +16,12 @@ class PaymentRule(BaseModel):
     amount: float | None = None
 
 
+class ItemQuantityRule(BaseModel):
+    item: str
+    person: str
+    quantity: float
+
+
 class ConsumptionRules(BaseModel):
     participants: list[str]
 
@@ -24,6 +30,8 @@ class ConsumptionRules(BaseModel):
     exclusion_rules: list[ExclusionRule]
 
     payments: list[PaymentRule]
+
+    item_quantity_rules: list[ItemQuantityRule] = []
 
     shared_remaining_items: bool = False
 
