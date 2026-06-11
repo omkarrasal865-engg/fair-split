@@ -16,7 +16,7 @@ class PaymentRule(BaseModel):
     amount: float | None = None
 
 
-class ConsumptionRules(BaseModel):
+class RawRulesExtraction(BaseModel):
     participants: list[str]
 
     ownership_rules: list[OwnershipRule]
@@ -25,6 +25,4 @@ class ConsumptionRules(BaseModel):
 
     payments: list[PaymentRule]
 
-    assumptions: list[str] = []
-
-    flags: list[str] = []
+    raw_description: str
