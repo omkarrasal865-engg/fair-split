@@ -5,29 +5,29 @@ class PersonBreakdown(BaseModel):
     name: str
     items: list[str]
 
-    subtotal: int
-    tax_share: int
-    service_share: int
-    discount_share: int
+    subtotal: float
+    tax_share: float
+    service_share: float
+    discount_share: float
 
-    total: int
+    total: float
 
 
 class Reconciliation(BaseModel):
-    sum_of_person_totals: int
+    sum_of_person_totals: float
     matches_bill: bool
 
 
 class Settlement(BaseModel):
     from_person: str
     to_person: str
-    amount: int
+    amount: float
 
 
 class FairSplitResponse(BaseModel):
     per_person: list[PersonBreakdown]
 
-    grand_total: int
+    grand_total: float
 
     reconciliation: Reconciliation
 
