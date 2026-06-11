@@ -26,4 +26,29 @@ Description:
 
         data = json.loads(response)
 
-        return RawRulesExtraction(**data)
+        return RawRulesExtraction(
+            participants=data.get(
+                "participants",
+                [],
+            ),
+            ownership_rules=data.get(
+                "ownership_rules",
+                [],
+            ),
+            exclusion_rules=data.get(
+                "exclusion_rules",
+                [],
+            ),
+            payments=data.get(
+                "payments",
+                [],
+            ),
+            shared_remaining_items=data.get(
+                "shared_remaining_items",
+                False,
+            ),
+            raw_description=data.get(
+                "raw_description",
+                description,
+            ),
+        )

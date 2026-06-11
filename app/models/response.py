@@ -15,6 +15,11 @@ class PersonBreakdown(BaseModel):
 
 class Reconciliation(BaseModel):
     sum_of_person_totals: float
+
+    grand_total: float
+
+    difference: float
+
     matches_bill: bool
 
 

@@ -56,37 +56,42 @@ Rules:
 12. If a value is unknown, use null.
 13. Treat references such as "I", "me", and "my" as "User".
 14. Include the original description in raw_description.
+15. If the description implies all remaining items should be split among everyone
+    (e.g. "split everything else equally", "share the rest"),
+    set shared_remaining_items = true.
 
 Return JSON in exactly this format:
 
 {
-"participants": [
-"User",
-"Priya",
-"Aman"
-],
+  "participants": [
+    "User",
+    "Priya",
+    "Aman"
+  ],
 
-"ownership_rules": [
-{
-"item": "pasta",
-"consumers": ["User", "Priya"]
-}
-],
+  "ownership_rules": [
+    {
+      "item": "pasta",
+      "consumers": ["User", "Priya"]
+    }
+  ],
 
-"exclusion_rules": [
-{
-"person": "Aman",
-"item": "drinks"
-}
-],
+  "exclusion_rules": [
+    {
+      "person": "Aman",
+      "item": "drinks"
+    }
+  ],
 
-"payments": [
-{
-"person": "Priya",
-"amount": null
-}
-],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
 
-"raw_description": "original description"
+  "shared_remaining_items": true,
+
+  "raw_description": "original description"
 }
 """

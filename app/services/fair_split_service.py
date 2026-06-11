@@ -3,6 +3,7 @@ from app.models.rules import ConsumptionRules
 from app.models.response import FairSplitResponse
 
 from app.services.allocation_engine import AllocationEngine
+from app.services.drift_correction_engine import DriftCorrectionEngine
 from app.services.settlement_engine import SettlementEngine
 from app.services.reconciliation_engine import ReconciliationEngine
 
@@ -11,6 +12,7 @@ class FairSplitService:
 
     def __init__(self):
         self.allocation_engine = AllocationEngine()
+        self.drift_correction_engine = DriftCorrectionEngine()
         self.settlement_engine = SettlementEngine()
         self.reconciliation_engine = ReconciliationEngine()
 
@@ -23,6 +25,11 @@ class FairSplitService:
         breakdowns = self.allocation_engine.allocate(
             receipt=receipt,
             rules=rules,
+        )
+
+        breakdowns = self.drift_correction_engine.correct(
+            breakdowns=breakdowns,
+            grand_total=receipt.grand_total,
         )
 
         paid_by = None

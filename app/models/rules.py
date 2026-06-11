@@ -25,6 +25,8 @@ class ConsumptionRules(BaseModel):
 
     payments: list[PaymentRule]
 
+    shared_remaining_items: bool = False
+
     assumptions: list[str] = []
 
     flags: list[str] = []

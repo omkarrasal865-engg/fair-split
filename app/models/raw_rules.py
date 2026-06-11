@@ -25,4 +25,6 @@ class RawRulesExtraction(BaseModel):
 
     payments: list[PaymentRule]
 
+    shared_remaining_items: bool = False
+
     raw_description: str

@@ -16,10 +16,15 @@ class RulesValidator:
         assumptions = []
         flags = []
 
-        # Remove duplicate participants while preserving order
-        participants = list(dict.fromkeys(raw_rules.participants))
+        participants = list(
+            dict.fromkeys(
+                raw_rules.participants
+            )
+        )
 
-        participant_set = set(participants)
+        participant_set = set(
+            participants
+        )
 
         valid_ownership_rules = []
 
@@ -46,7 +51,7 @@ class RulesValidator:
             valid_ownership_rules.append(
                 OwnershipRule(
                     item=rule.item,
-                    consumers=rule.consumers
+                    consumers=rule.consumers,
                 )
             )
 
@@ -63,7 +68,7 @@ class RulesValidator:
             valid_exclusion_rules.append(
                 ExclusionRule(
                     person=rule.person,
-                    item=rule.item
+                    item=rule.item,
                 )
             )
 
@@ -80,7 +85,7 @@ class RulesValidator:
             valid_payments.append(
                 PaymentRule(
                     person=payment.person,
-                    amount=payment.amount
+                    amount=payment.amount,
                 )
             )
 
@@ -94,6 +99,8 @@ class RulesValidator:
             ownership_rules=valid_ownership_rules,
             exclusion_rules=valid_exclusion_rules,
             payments=valid_payments,
+            shared_remaining_items=
+                raw_rules.shared_remaining_items,
             assumptions=assumptions,
             flags=flags,
         )

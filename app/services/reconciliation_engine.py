@@ -20,14 +20,26 @@ class ReconciliationEngine:
             2,
         )
 
-        difference = abs(
-            sum_of_person_totals
-            - grand_total
+        difference = round(
+            grand_total
+            - sum_of_person_totals,
+            2,
         )
 
-        matches_bill = difference <= 0.05
+        matches_bill = (
+            difference == 0
+        )
 
         return Reconciliation(
-            sum_of_person_totals=sum_of_person_totals,
-            matches_bill=matches_bill,
+            sum_of_person_totals=
+                sum_of_person_totals,
+
+            grand_total=
+                grand_total,
+
+            difference=
+                difference,
+
+            matches_bill=
+                matches_bill,
         )
