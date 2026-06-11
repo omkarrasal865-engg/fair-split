@@ -22,7 +22,13 @@ Receipt Text:
 {receipt_text}
 """
 
+        print("\n========== RECEIPT PROMPT ==========\n")
+        print(prompt)
+
         response = self.client.generate_text(prompt)
+
+        print("\n========== RAW GEMINI RESPONSE ==========\n")
+        print(response)
 
         data = json.loads(response)
 

@@ -30,7 +30,7 @@ class BillProcessor:
             receipt_text
         )
 
-        receipt = self.receipt_validator.validate(
+        receipt_validation = self.receipt_validator.validate(
             raw_receipt
         )
 
@@ -43,6 +43,6 @@ class BillProcessor:
         )
 
         return self.fair_split_service.generate_response(
-            receipt=receipt,
+            receipt=receipt_validation.receipt,
             rules=rules,
         )
