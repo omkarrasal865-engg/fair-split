@@ -23,9 +23,61 @@ class AllocationEngine:
 
         for item in receipt.items:
 
+            quantity_rules = []
+
+            for quantity_rule in rules.item_quantity_rules:
+
+                if ItemMatcher.matches(
+                    quantity_rule.item,
+                    item.name,
+                ):
+                    quantity_rules.append(
+                        quantity_rule
+                    )
+
+            # V3 Quantity Allocation
+            if quantity_rules:
+
+                item_quantity = item.quantity or 1
+
+                if item_quantity <= 0:
+                    continue
+
+                unit_price = (
+                    item.amount /
+                    item_quantity
+                )
+
+                allocated_quantity = sum(
+                    rule.quantity
+                    for rule in quantity_rules
+                )
+
+                if allocated_quantity > item_quantity:
+                    allocated_quantity = item_quantity
+
+                for rule in quantity_rules:
+
+                    amount = (
+                        rule.quantity *
+                        unit_price
+                    )
+
+                    item_lists[
+                        rule.person
+                    ].append(
+                        f"{item.name} ({rule.quantity})"
+                    )
+
+                    subtotals[
+                        rule.person
+                    ] += amount
+
+                continue
+
             consumers = None
 
-            # Explicit ownership rules
+            # Ownership Rules
             for rule in rules.ownership_rules:
 
                 if ItemMatcher.matches(
@@ -35,12 +87,14 @@ class AllocationEngine:
                     consumers = rule.consumers
                     break
 
-            # Default sharing
+            # Default Sharing
             if consumers is None:
 
-                consumers = list(participants)
+                consumers = list(
+                    participants
+                )
 
-                # Apply exclusions
+                # Exclusions
                 for exclusion in exclusion_rules:
 
                     if ItemMatcher.matches(
@@ -55,15 +109,22 @@ class AllocationEngine:
             if not consumers:
                 continue
 
-            share = item.amount / len(consumers)
+            share = (
+                item.amount /
+                len(consumers)
+            )
 
             for person in consumers:
 
-                item_lists[person].append(
+                item_lists[
+                    person
+                ].append(
                     item.name
                 )
 
-                subtotals[person] += share
+                subtotals[
+                    person
+                ] += share
 
         breakdowns = []
 
@@ -73,27 +134,30 @@ class AllocationEngine:
 
             subtotal = round(
                 subtotals[person],
-                2
+                2,
             )
 
             if receipt_subtotal > 0:
-                ratio = subtotal / receipt_subtotal
+                ratio = (
+                    subtotal /
+                    receipt_subtotal
+                )
             else:
                 ratio = 0
 
             tax_share = round(
                 receipt.tax * ratio,
-                2
+                2,
             )
 
             service_share = round(
                 receipt.service_charge * ratio,
-                2
+                2,
             )
 
             discount_share = round(
                 receipt.discount * ratio,
-                2
+                2,
             )
 
             total = round(
@@ -101,7 +165,7 @@ class AllocationEngine:
                 + tax_share
                 + service_share
                 - discount_share,
-                2
+                2,
             )
 
             breakdowns.append(
