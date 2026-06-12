@@ -8,6 +8,7 @@ load_dotenv()
 
 
 class GeminiClient:
+
     def __init__(self):
         api_key = os.getenv("GEMINI_API_KEY")
 
@@ -16,12 +17,30 @@ class GeminiClient:
                 "GEMINI_API_KEY not found in environment variables"
             )
 
-        self.client = genai.Client(api_key=api_key)
+        self.client = genai.Client(
+            api_key=api_key
+        )
 
-    def generate_text(self, prompt: str) -> str:
+    def generate_text(
+        self,
+        prompt: str,
+    ) -> str:
+
         response = self.client.models.generate_content(
             model="gemini-2.5-flash",
             contents=prompt,
+        )
+
+        return response.text
+
+    def generate_content(
+        self,
+        contents,
+    ) -> str:
+
+        response = self.client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=contents,
         )
 
         return response.text

@@ -29,6 +29,18 @@ class Settlement(BaseModel):
     amount: float
 
 
+class UnallocatedItem(BaseModel):
+    item: str
+
+    total_quantity: float
+
+    allocated_quantity: float
+
+    remaining_quantity: float
+
+    remaining_amount: float
+
+
 class FairSplitResponse(BaseModel):
     per_person: list[PersonBreakdown]
 
@@ -41,4 +53,7 @@ class FairSplitResponse(BaseModel):
     settle_up: list[Settlement]
 
     assumptions: list[str]
+
     flags: list[str]
+
+    unallocated_items: list[UnallocatedItem] = []

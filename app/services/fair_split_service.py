@@ -3,6 +3,9 @@ from app.models.rules import ConsumptionRules
 from app.models.response import FairSplitResponse
 
 from app.services.allocation_engine import AllocationEngine
+from app.services.quantity_reconciliation_engine import (
+    QuantityReconciliationEngine,
+)
 from app.services.drift_correction_engine import DriftCorrectionEngine
 from app.services.settlement_engine import SettlementEngine
 from app.services.reconciliation_engine import ReconciliationEngine
@@ -12,9 +15,20 @@ class FairSplitService:
 
     def __init__(self):
         self.allocation_engine = AllocationEngine()
-        self.drift_correction_engine = DriftCorrectionEngine()
+
+        self.quantity_reconciliation_engine = (
+            QuantityReconciliationEngine()
+        )
+
+        self.drift_correction_engine = (
+            DriftCorrectionEngine()
+        )
+
         self.settlement_engine = SettlementEngine()
-        self.reconciliation_engine = ReconciliationEngine()
+
+        self.reconciliation_engine = (
+            ReconciliationEngine()
+        )
 
     def generate_response(
         self,
@@ -26,6 +40,24 @@ class FairSplitService:
             receipt=receipt,
             rules=rules,
         )
+
+        unallocated_items = (
+            self.quantity_reconciliation_engine.reconcile(
+                receipt=receipt,
+                allocation_result=breakdowns,
+            )
+        )
+
+        response_unallocated_items = [
+            {
+                "item": item.item,
+                "total_quantity": item.total_quantity,
+                "allocated_quantity": item.allocated_quantity,
+                "remaining_quantity": item.remaining_quantity,
+                "remaining_amount": item.remaining_amount,
+            }
+            for item in unallocated_items
+        ]
 
         breakdowns = self.drift_correction_engine.correct(
             breakdowns=breakdowns,
@@ -48,7 +80,13 @@ class FairSplitService:
         )
 
         assumptions = list(rules.assumptions)
+
         flags = list(rules.flags)
+
+        if unallocated_items:
+            flags.append(
+                "Receipt contains quantities that were not allocated."
+            )
 
         return FairSplitResponse(
             per_person=breakdowns,
@@ -58,4 +96,5 @@ class FairSplitService:
             settle_up=settlements,
             assumptions=assumptions,
             flags=flags,
+            unallocated_items=response_unallocated_items,
         )
