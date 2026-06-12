@@ -4,6 +4,8 @@ from app.ai.gemini_client import GeminiClient
 from app.ai.prompts import RULE_EXTRACTION_PROMPT
 from app.models.raw_rules import RawRulesExtraction
 
+from app.utils.logger import logger
+
 
 class RulesExtractor:
 
@@ -12,8 +14,12 @@ class RulesExtractor:
 
     def extract_from_text(
         self,
-        description: str
+        description: str,
     ) -> RawRulesExtraction:
+
+        logger.info(
+            "Rules extraction started"
+        )
 
         prompt = f"""
 {RULE_EXTRACTION_PROMPT}
@@ -23,9 +29,29 @@ Description:
 {description}
 """
 
-        response = self.client.generate_text(prompt)
+        logger.info(
+            "Rules prompt generated"
+        )
 
-        data = json.loads(response)
+        response = self.client.generate_text(
+            prompt
+        )
+
+        logger.info(
+            "Rules extraction completed"
+        )
+
+        logger.info(
+            f"Raw Gemini rules response: {response}"
+        )
+
+        data = json.loads(
+            response
+        )
+
+        logger.info(
+            "Rules JSON parsed successfully"
+        )
 
         return RawRulesExtraction(
             participants=data.get(

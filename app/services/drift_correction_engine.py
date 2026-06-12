@@ -9,7 +9,11 @@ class DriftCorrectionEngine:
         self,
         breakdowns: list[PersonBreakdown],
         grand_total: float,
+        allow_correction: bool = True,
     ) -> list[PersonBreakdown]:
+
+        if not allow_correction:
+            return breakdowns
 
         current_total = round(
             sum(

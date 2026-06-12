@@ -6,6 +6,8 @@ from app.ai.gemini_client import GeminiClient
 from app.ai.prompts import RECEIPT_EXTRACTION_PROMPT
 from app.models.raw_receipt import RawReceiptExtraction
 
+from app.utils.logger import logger
+
 
 class ImageReceiptExtractor:
 
@@ -30,9 +32,30 @@ class ImageReceiptExtractor:
             ]
         )
 
-        print("\n========== IMAGE GEMINI RESPONSE ==========\n")
+        print(
+            "\n========== IMAGE GEMINI RESPONSE ==========\n"
+        )
         print(response)
 
-        data = json.loads(response)
+        try:
+            data = json.loads(
+                response
+            )
 
-        return RawReceiptExtraction(**data)
+        except json.JSONDecodeError:
+
+            logger.error(
+                f"Invalid JSON returned by Gemini: {response}"
+            )
+
+            raise ValueError(
+                "Gemini returned invalid JSON"
+            )
+
+        logger.info(
+            "Receipt JSON parsed successfully"
+        )
+
+        return RawReceiptExtraction(
+            **data
+        )

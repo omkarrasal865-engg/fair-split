@@ -1,0 +1,794 @@
+2026-06-13 01:09:04,664 | INFO | Logger test successful
+2026-06-13 01:14:29,746 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:14:37,411 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:14:37,413 | INFO | Rules extraction started
+2026-06-13 01:14:37,413 | INFO | Rules prompt generated
+2026-06-13 01:14:37,414 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:14:45,500 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:14:45,515 | INFO | Rules extraction completed
+2026-06-13 01:14:45,516 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [
+    {
+      "item": "Mutton biriyani",
+      "consumers": ["Aman"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Aman"]
+    },
+    {
+      "item": "Mutton biriyani",
+      "consumers": ["Priya"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Priya"]
+    },
+    {
+      "item": "Chilly chicken",
+      "consumers": ["Priya"]
+    },
+    {
+      "item": "Mutton biriyani",
+      "consumers": ["Karan"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Karan"]
+    },
+    {
+      "item": "Chilly chicken",
+      "consumers": ["Karan"]
+    },
+    {
+      "item": "Chicken pepper",
+      "consumers": ["Karan"]
+    }
+  ],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": false,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti.  Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken.  Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper.  Priya paid the bill."
+}
+2026-06-13 01:14:45,516 | INFO | Rules JSON parsed successfully
+2026-06-13 01:22:50,383 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:23:01,229 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:23:01,231 | INFO | Rules extraction started
+2026-06-13 01:23:01,231 | INFO | Rules prompt generated
+2026-06-13 01:23:01,231 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:23:07,885 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:23:07,886 | INFO | Rules extraction completed
+2026-06-13 01:23:07,886 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": false,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti. Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken. Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper. Priya paid the bill."
+}
+2026-06-13 01:23:07,886 | INFO | Rules JSON parsed successfully
+2026-06-13 01:29:34,989 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:29:43,669 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:42:57,996 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:43:06,809 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:43:59,580 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:44:05,690 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:49:41,534 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:49:50,633 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:53:29,013 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:53:37,267 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:53:37,268 | INFO | Receipt JSON parsed successfully
+2026-06-13 01:53:37,268 | INFO | Rules extraction started
+2026-06-13 01:53:37,269 | INFO | Rules prompt generated
+2026-06-13 01:53:37,269 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:53:45,750 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:53:45,751 | INFO | Rules extraction completed
+2026-06-13 01:53:45,751 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": false,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti. Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken. Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper. Priya paid the bill."
+}
+2026-06-13 01:53:45,752 | INFO | Rules JSON parsed successfully
+2026-06-13 01:56:12,535 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:56:23,685 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:56:23,686 | INFO | Receipt JSON parsed successfully
+2026-06-13 01:56:23,686 | INFO | Rules extraction started
+2026-06-13 01:56:23,686 | INFO | Rules prompt generated
+2026-06-13 01:56:23,686 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:56:29,615 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:56:29,616 | INFO | Rules extraction completed
+2026-06-13 01:56:29,617 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [
+    {
+      "item": "Mutton biriyani",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Chilly chicken",
+      "consumers": ["Priya", "Karan"]
+    },
+    {
+      "item": "Chicken pepper",
+      "consumers": ["Karan"]
+    }
+  ],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti. Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken. Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper. Share any remaining food equally. Priya paid the bill."
+}
+2026-06-13 01:56:29,617 | INFO | Rules JSON parsed successfully
+2026-06-13 01:57:00,589 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:57:09,020 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:57:09,021 | INFO | Receipt JSON parsed successfully
+2026-06-13 01:57:09,021 | INFO | Rules extraction started
+2026-06-13 01:57:09,021 | INFO | Rules prompt generated
+2026-06-13 01:57:09,021 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 01:57:15,725 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 01:57:15,726 | INFO | Rules extraction completed
+2026-06-13 01:57:15,727 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti. Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken. Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper. Share any remaining food equally. Priya paid the bill."
+}
+2026-06-13 01:57:15,727 | INFO | Rules JSON parsed successfully
+2026-06-13 02:05:40,546 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 02:05:48,687 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 02:05:48,688 | INFO | Receipt JSON parsed successfully
+2026-06-13 02:05:48,688 | INFO | Rules extraction started
+2026-06-13 02:05:48,689 | INFO | Rules prompt generated
+2026-06-13 02:05:48,689 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 02:05:49,347 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-06-13 02:09:31,298 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 02:09:32,136 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-06-13 02:17:21,264 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 02:17:22,027 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-06-13 02:28:17,526 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 02:28:18,307 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-06-13 02:30:52,634 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 02:30:53,411 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-06-13 03:11:39,810 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:11:40,664 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-06-13 03:17:15,496 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:17:26,526 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 03:17:26,527 | INFO | Receipt JSON parsed successfully
+2026-06-13 03:19:07,945 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:19:17,036 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 03:19:17,037 | INFO | Receipt JSON parsed successfully
+2026-06-13 03:19:17,038 | INFO | Rules extraction started
+2026-06-13 03:19:17,038 | INFO | Rules prompt generated
+2026-06-13 03:19:17,038 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:19:18,291 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-06-13 03:21:34,438 | INFO | Rules extraction started
+2026-06-13 03:21:34,439 | INFO | Rules prompt generated
+2026-06-13 03:21:34,439 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:21:42,201 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 03:21:42,202 | INFO | Rules extraction completed
+2026-06-13 03:21:42,202 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti.\nPriya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken.\nKaran ate 1 Mutton biriyani, 1 Tandoori Roti,\n1 Chilly chicken and 2 Chicken pepper.\nPriya paid the bill.\nShare remaining items equally."
+}
+2026-06-13 03:21:42,203 | INFO | Rules JSON parsed successfully
+2026-06-13 03:23:53,876 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:24:02,426 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 03:24:02,427 | INFO | Receipt JSON parsed successfully
+2026-06-13 03:24:02,427 | INFO | Rules extraction started
+2026-06-13 03:24:02,427 | INFO | Rules prompt generated
+2026-06-13 03:24:02,427 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:24:10,184 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 03:24:10,185 | INFO | Rules extraction completed
+2026-06-13 03:24:10,185 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [
+    {
+      "item": "Mutton biriyani",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Chilly chicken",
+      "consumers": ["Priya", "Karan"]
+    },
+    {
+      "item": "Chicken pepper",
+      "consumers": ["Karan"]
+    }
+  ],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti. Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken. Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper. Priya paid the bill. Share remaining items equally."
+}
+2026-06-13 03:24:10,186 | INFO | Rules JSON parsed successfully
+2026-06-13 03:27:49,081 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:27:57,463 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 03:27:57,464 | INFO | Receipt JSON parsed successfully
+2026-06-13 03:27:57,465 | INFO | Rules extraction started
+2026-06-13 03:27:57,465 | INFO | Rules prompt generated
+2026-06-13 03:27:57,465 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 03:28:01,945 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 03:28:01,946 | INFO | Rules extraction completed
+2026-06-13 03:28:01,946 | INFO | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti. Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken. Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper. Priya paid the bill. Share remaining items equally."
+}
+2026-06-13 03:28:01,947 | INFO | Rules JSON parsed successfully
+2026-06-13 04:14:01,328 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 04:14:10,774 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 04:14:10,776 | INFO | Receipt JSON parsed successfully
+2026-06-13 04:17:39,131 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 04:17:49,660 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 04:17:49,661 | INFO | Receipt JSON parsed successfully
+2026-06-13 04:20:43,923 | INFO | AFC is enabled with max remote calls: 10.
+2026-06-13 04:20:53,375 | INFO | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 04:20:53,377 | INFO | Receipt JSON parsed successfully
+2026-06-13 04:25:01,589 | INFO | fairsplit | [unknown] Started GET /docs
+2026-06-13 04:25:01,590 | INFO | fairsplit | [unknown] Completed GET /docs status=200 duration=0.001s
+2026-06-13 04:25:01,772 | INFO | fairsplit | [unknown] Started GET /openapi.json
+2026-06-13 04:25:01,780 | INFO | fairsplit | [unknown] Completed GET /openapi.json status=200 duration=0.008s
+2026-06-13 04:25:57,346 | INFO | fairsplit | [unknown] Started GET /docs
+2026-06-13 04:25:57,347 | INFO | fairsplit | [unknown] Completed GET /docs status=200 duration=0.001s
+2026-06-13 04:25:57,426 | INFO | fairsplit | [unknown] Started GET /openapi.json
+2026-06-13 04:25:57,427 | INFO | fairsplit | [unknown] Completed GET /openapi.json status=200 duration=0.001s
+2026-06-13 04:29:07,003 | INFO | fairsplit | [unknown] Started GET /
+2026-06-13 04:29:07,006 | INFO | fairsplit | [unknown] Completed GET / status=200 duration=0.003s
+2026-06-13 04:33:40,119 | INFO | fairsplit | [unknown] Started GET /docs
+2026-06-13 04:33:40,120 | INFO | fairsplit | [unknown] Completed GET /docs status=200 duration=0.001s
+2026-06-13 04:33:40,276 | INFO | fairsplit | [unknown] Started GET /openapi.json
+2026-06-13 04:33:40,283 | INFO | fairsplit | [unknown] Completed GET /openapi.json status=200 duration=0.008s
+2026-06-13 04:34:07,769 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-13 04:34:07,771 | INFO | fairsplit | Image bill processing started
+2026-06-13 04:34:07,772 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 04:34:18,946 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 04:34:18,947 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-13 04:34:18,948 | INFO | fairsplit | Receipt extracted from image
+2026-06-13 04:34:18,948 | INFO | fairsplit | Receipt validated | items=4
+2026-06-13 04:34:18,948 | INFO | fairsplit | Rules extraction started
+2026-06-13 04:34:18,948 | INFO | fairsplit | Rules prompt generated
+2026-06-13 04:34:18,948 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 04:34:24,920 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 04:34:24,921 | INFO | fairsplit | Rules extraction completed
+2026-06-13 04:34:24,921 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton biriyani and 2 Tandoori Roti. Priya ate 1 Mutton biriyani, 2 Tandoori Roti and 1 Chilly chicken. Karan ate 1 Mutton biriyani, 1 Tandoori Roti, 1 Chilly chicken and 2 Chicken pepper. Priya paid the bill. Share remaining items equally."
+}
+2026-06-13 04:34:24,921 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-13 04:34:24,922 | INFO | fairsplit | Consumption rules extracted
+2026-06-13 04:34:24,922 | INFO | fairsplit | Rules validated | participants=3
+2026-06-13 04:34:24,922 | INFO | fairsplit | Starting allocation process
+2026-06-13 04:34:24,923 | INFO | fairsplit | Allocation completed
+2026-06-13 04:34:24,923 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-13 04:34:24,923 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-13 04:34:24,923 | INFO | fairsplit | Fair split response generated
+2026-06-13 04:34:24,923 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=17.155s

@@ -6,6 +6,10 @@ from app.validators.receipt_validator import (
     ReceiptValidator,
 )
 
+from app.utils.logger import (
+    logger,
+)
+
 
 class ImageReceiptProcessor:
 
@@ -20,6 +24,10 @@ class ImageReceiptProcessor:
         mime_type: str,
     ):
 
+        logger.info(
+            f"Receipt image processing started | mime_type={mime_type}"
+        )
+
         raw_receipt = (
             self.extractor.extract_from_image(
                 image_bytes=image_bytes,
@@ -27,10 +35,18 @@ class ImageReceiptProcessor:
             )
         )
 
+        logger.info(
+            "Receipt extraction completed"
+        )
+
         validation = (
             self.validator.validate(
                 raw_receipt
             )
+        )
+
+        logger.info(
+            f"Receipt validation completed | items={len(validation.receipt.items)}"
         )
 
         return validation.receipt

@@ -4,15 +4,22 @@ from app.ai.gemini_client import GeminiClient
 from app.ai.prompts import RECEIPT_EXTRACTION_PROMPT
 from app.models.raw_receipt import RawReceiptExtraction
 
+from app.utils.logger import logger
+
 
 class ReceiptExtractor:
+
     def __init__(self):
         self.client = GeminiClient()
 
     def extract_from_text(
         self,
-        receipt_text: str
+        receipt_text: str,
     ) -> RawReceiptExtraction:
+
+        logger.info(
+            "Receipt extraction started"
+        )
 
         prompt = f"""
 {RECEIPT_EXTRACTION_PROMPT}
@@ -22,14 +29,30 @@ Receipt Text:
 {receipt_text}
 """
 
-        print("\n========== RECEIPT PROMPT ==========\n")
-        print(prompt)
+        logger.info(
+            "Receipt prompt generated"
+        )
 
-        response = self.client.generate_text(prompt)
+        response = self.client.generate_text(
+            prompt
+        )
 
-        print("\n========== RAW GEMINI RESPONSE ==========\n")
-        print(response)
+        logger.info(
+            "Receipt extraction completed"
+        )
 
-        data = json.loads(response)
+        logger.info(
+            f"Raw Gemini receipt response: {response}"
+        )
 
-        return RawReceiptExtraction(**data)
+        data = json.loads(
+            response
+        )
+
+        logger.info(
+            "Receipt JSON parsed successfully"
+        )
+
+        return RawReceiptExtraction(
+            **data
+        )

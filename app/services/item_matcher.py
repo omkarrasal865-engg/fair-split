@@ -1,3 +1,6 @@
+from difflib import SequenceMatcher
+
+
 class ItemMatcher:
 
     @staticmethod
@@ -6,8 +9,17 @@ class ItemMatcher:
         receipt_item: str,
     ) -> bool:
 
-        rule_item = rule_item.lower().strip()
-        receipt_item = receipt_item.lower().strip()
+        rule_item = (
+            rule_item
+            .lower()
+            .strip()
+        )
+
+        receipt_item = (
+            receipt_item
+            .lower()
+            .strip()
+        )
 
         if rule_item == receipt_item:
             return True
@@ -18,4 +30,10 @@ class ItemMatcher:
         if receipt_item in rule_item:
             return True
 
-        return False
+        similarity = SequenceMatcher(
+            None,
+            rule_item,
+            receipt_item,
+        ).ratio()
+
+        return similarity >= 0.80

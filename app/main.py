@@ -2,66 +2,162 @@ from fastapi import (
     FastAPI,
     UploadFile,
     File,
-    HTTPException,
+    Form,
+    Request,
 )
 
-from app.models.api import SplitBillRequest
+from fastapi.exceptions import (
+    RequestValidationError,
+)
 
-from app.services.bill_processor import BillProcessor
+from app.models.api import (
+    SplitBillRequest,
+    ApiSuccessResponse,
+)
+
+from app.services.bill_processor import (
+    BillProcessor,
+)
+
 from app.services.image_receipt_processor import (
     ImageReceiptProcessor,
+)
+
+from app.services.image_bill_processor import (
+    ImageBillProcessor,
+)
+
+from app.middleware.error_handler import (
+    ErrorHandlerMiddleware,
+)
+
+from app.middleware.request_id import (
+    RequestIdMiddleware,
+)
+
+from app.middleware.request_logging import (
+    RequestLoggingMiddleware,
+)
+
+from app.exceptions import (
+    FairSplitException,
+)
+
+from app.validators.file_validator import (
+    FileValidator,
 )
 
 
 app = FastAPI()
 
+app.add_middleware(
+    RequestIdMiddleware
+)
+
+app.add_middleware(
+    RequestLoggingMiddleware
+)
+
+app.add_exception_handler(
+    RequestValidationError,
+    ErrorHandlerMiddleware.handle_validation_error,
+)
+
+app.add_exception_handler(
+    FairSplitException,
+    ErrorHandlerMiddleware.handle_custom_error,
+)
+
+app.add_exception_handler(
+    Exception,
+    ErrorHandlerMiddleware.handle_generic_error,
+)
+
 processor = BillProcessor()
 
-image_processor = ImageReceiptProcessor()
+image_processor = (
+    ImageReceiptProcessor()
+)
+
+image_bill_processor = (
+    ImageBillProcessor()
+)
 
 
 @app.get("/")
-def health_check():
-    return {
-        "status": "healthy",
-        "project": "Fair Split"
-    }
+def health_check(
+    request: Request,
+):
+    return ApiSuccessResponse(
+        request_id=request.state.request_id,
+        data={
+            "status": "healthy",
+            "project": "Fair Split",
+        },
+    ).model_dump()
 
 
 @app.post("/split-bill")
 def split_bill(
-    request: SplitBillRequest
+    request_data: SplitBillRequest,
+    request: Request,
 ):
     response = processor.process(
-        receipt_text=request.receipt_text,
-        description=request.description,
+        receipt_text=request_data.receipt_text,
+        description=request_data.description,
     )
 
-    return response.model_dump()
+    return ApiSuccessResponse(
+        request_id=request.state.request_id,
+        data=response.model_dump(),
+    ).model_dump()
 
 
 @app.post("/extract-receipt-image")
 async def extract_receipt_image(
-    file: UploadFile = File(...)
+    request: Request,
+    file: UploadFile = File(...),
 ):
 
-    allowed_types = [
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-    ]
-
-    if file.content_type not in allowed_types:
-        raise HTTPException(
-            status_code=400,
-            detail="Unsupported image format",
-        )
-
     image_bytes = await file.read()
+
+    FileValidator.validate(
+        file_type=file.content_type,
+        file_size=len(image_bytes),
+    )
 
     receipt = image_processor.process(
         image_bytes=image_bytes,
         mime_type=file.content_type,
     )
 
-    return receipt.model_dump()
+    return ApiSuccessResponse(
+        request_id=request.state.request_id,
+        data=receipt.model_dump(),
+    ).model_dump()
+
+
+@app.post("/split-bill-image")
+async def split_bill_image(
+    request: Request,
+    file: UploadFile = File(...),
+    description: str = Form(...),
+):
+
+    image_bytes = await file.read()
+
+    FileValidator.validate(
+        file_type=file.content_type,
+        file_size=len(image_bytes),
+    )
+
+    response = image_bill_processor.process(
+        image_bytes=image_bytes,
+        mime_type=file.content_type,
+        description=description,
+    )
+
+    return ApiSuccessResponse(
+        request_id=request.state.request_id,
+        data=response.model_dump(),
+    ).model_dump()
