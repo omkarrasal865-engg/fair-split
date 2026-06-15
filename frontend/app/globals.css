@@ -1,11 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #171717;
+  --bg: #0b0f0e;
+  --surface: #141a18;
+  --surface-2: #1c2422;
+  --border: #2a3431;
+  --text: #f4f5f1;
+  --text-muted: #8a9590;
+  --accent: #34d399;
+  --accent-dim: #1f3d31;
+  --warn: #fbbf24;
+  --warn-dim: #3a2f12;
+  --danger: #f87171;
+  --danger-dim: #3a1f1f;
+}
+
+html {
+  background: var(--bg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--text);
+  font-feature-settings: "tnum" 1;
+}
+
+/* Tabular numerals for all monetary figures */
+.num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Subtle fade-up entrance for result sections */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up {
+    animation: none;
+  }
+}
+
+/* Custom scrollbar to match dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+
+/* Visible focus ring everywhere, theme-matched */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

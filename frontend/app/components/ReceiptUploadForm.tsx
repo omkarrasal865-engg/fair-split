@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { splitBill } from "../lib/api";
 
 import ResultsSection from "./ResultsSection";
@@ -8,6 +8,13 @@ import SettlementSummary from "./SettlementSummary";
 import BillSummary from "./BillSummary";
 
 import { SplitBillResponse } from "../types/api";
+
+const PROCESSING_STEPS = [
+  { emoji: "📤", label: "Uploading receipt image" },
+  { emoji: "🤖", label: "Extracting receipt data with AI" },
+  { emoji: "⚖️", label: "Calculating fair split" },
+  { emoji: "💸", label: "Generating settlements" },
+];
 
 export default function ReceiptUploadForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -18,12 +25,22 @@ export default function ReceiptUploadForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [response, setResponse] =
-    useState<SplitBillResponse | null>(null);
+  const [response, setResponse] = useState<SplitBillResponse | null>(null);
 
-  async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>
-  ) {
+  const dropRef = useRef<HTMLLabelElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  function applyFile(selectedFile: File | null) {
+    setFile(selectedFile);
+
+    if (selectedFile) {
+      setPreviewUrl(URL.createObjectURL(selectedFile));
+    } else {
+      setPreviewUrl(null);
+    }
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setError("");
@@ -42,18 +59,11 @@ export default function ReceiptUploadForm() {
     try {
       setLoading(true);
 
-      const result = await splitBill(
-        file,
-        description
-      );
+      const result = await splitBill(file, description);
 
       setResponse(result);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong."
-      );
+      setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -69,174 +79,214 @@ export default function ReceiptUploadForm() {
     setFileInputKey((prev) => prev + 1);
   }
 
+  const showForm = !response?.data;
+
   return (
-    <div className="w-full max-w-5xl rounded-2xl bg-white p-6 shadow-lg">
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6"
-      >
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            Upload Receipt
-          </label>
+    <div className="w-full">
+      {showForm && (
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-5 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6"
+        >
+          {/* Upload Receipt */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-[var(--text)]">
+              Receipt
+            </label>
 
-          <input
-            key={fileInputKey}
-            type="file"
-            accept="image/*"
-            disabled={loading}
-            onChange={(e) => {
-              const selectedFile =
-                e.target.files?.[0] || null;
+            <label
+              ref={dropRef}
+              htmlFor="receipt-file"
+              onDragOver={(e) => {
+                e.preventDefault();
+                if (!loading) setIsDragging(true);
+              }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDragging(false);
+                if (loading) return;
+                const dropped = e.dataTransfer.files?.[0];
+                if (dropped) applyFile(dropped);
+              }}
+              className={`group relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-4 py-8 text-center transition-colors
+                ${
+                  isDragging
+                    ? "border-[var(--accent)] bg-[var(--accent-dim)]"
+                    : "border-[var(--border)] bg-[var(--surface-2)] hover:border-[var(--accent)]/50"
+                }
+                ${loading ? "cursor-not-allowed opacity-60" : ""}
+              `}
+            >
+              <input
+                key={fileInputKey}
+                id="receipt-file"
+                type="file"
+                accept="image/*"
+                disabled={loading}
+                onChange={(e) => {
+                  const selectedFile = e.target.files?.[0] || null;
+                  applyFile(selectedFile);
+                }}
+                className="sr-only"
+              />
 
-              setFile(selectedFile);
-
-              if (selectedFile) {
-                setPreviewUrl(
-                  URL.createObjectURL(
-                    selectedFile
-                  )
-                );
-              } else {
-                setPreviewUrl(null);
-              }
-            }}
-            className="block w-full rounded-lg border border-gray-300 p-3 disabled:bg-gray-100"
-          />
-
-          {previewUrl && (
-            <div className="mt-4">
-              <p className="mb-2 text-sm font-medium text-gray-700">
-                Receipt Preview
-              </p>
-
-              <div className="overflow-hidden rounded-lg border border-gray-300">
-                <img
-                  src={previewUrl}
-                  alt="Receipt Preview"
-                  className="max-h-96 w-full object-contain bg-gray-50"
-                />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-lg">
+                📷
               </div>
 
-              {file && (
-                <p className="mt-2 text-sm text-gray-500">
-                  {file.name}
+              <div>
+                <p className="text-sm font-medium text-[var(--text)]">
+                  {file ? "Choose a different photo" : "Upload a photo of the bill"}
                 </p>
-              )}
+                <p className="mt-0.5 text-xs text-[var(--text-muted)]">
+                  Tap to browse, or drag an image here
+                </p>
+              </div>
+            </label>
+
+            {previewUrl && (
+              <div className="mt-4 animate-fade-up">
+                <p className="mb-2 text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
+                  Receipt preview
+                </p>
+
+                <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={previewUrl}
+                    alt="Receipt Preview"
+                    className="max-h-80 w-full object-contain"
+                  />
+                </div>
+
+                {file && (
+                  <div className="mt-2 flex items-center justify-between gap-2 text-xs text-[var(--text-muted)]">
+                    <span className="truncate">{file.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => applyFile(null)}
+                      disabled={loading}
+                      className="shrink-0 rounded-full border border-[var(--border)] px-2.5 py-1 text-[var(--text-muted)] transition hover:border-[var(--danger)] hover:text-[var(--danger)] disabled:opacity-50"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-[var(--text)]">
+              Who had what?
+            </label>
+
+            <textarea
+              rows={6}
+              value={description}
+              disabled={loading}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder={`e.g. "Aman skipped drinks. Priya and I shared the pasta. Everything else was common to all of us. Priya paid."`}
+              className="w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-sm text-[var(--text)] outline-none placeholder:text-[var(--text-muted)] transition-colors focus:border-[var(--accent)] disabled:opacity-60"
+            />
+          </div>
+
+          {error && (
+            <div className="flex items-start gap-2 rounded-2xl border border-[var(--danger)]/30 bg-[var(--danger-dim)] p-3 text-sm text-[var(--danger)]">
+              <span aria-hidden>⚠️</span>
+              <span>{error}</span>
             </div>
           )}
-        </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            Description
-          </label>
-
-          <textarea
-            rows={8}
-            value={description}
+          <button
+            type="submit"
             disabled={loading}
-            onChange={(e) =>
-              setDescription(e.target.value)
-            }
-            placeholder="Describe who consumed what..."
-            className="w-full rounded-lg border border-gray-300 p-4 outline-none focus:border-blue-500 disabled:bg-gray-100"
-          />
-        </div>
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--accent)] px-4 py-3.5 text-sm font-semibold text-[#06231a] transition active:scale-[0.99] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loading ? (
+              <>
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#06231a]/30 border-t-[#06231a]" />
+                Calculating split…
+              </>
+            ) : (
+              "Calculate split"
+            )}
+          </button>
+        </form>
+      )}
 
-        {error && (
-          <div className="rounded-lg border border-red-300 bg-red-50 p-3 text-red-700">
-            {error}
-          </div>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-400"
-        >
-          {loading
-            ? "Calculating..."
-            : "Calculate Split"}
-        </button>
-      </form>
-
+      {/* Processing state */}
       {loading && (
-        <div className="mt-8 rounded-2xl border border-blue-200 bg-blue-50 p-6">
+        <div className="mt-5 animate-fade-up rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6">
           <div className="flex items-center gap-4">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
+            <div className="relative h-11 w-11 shrink-0">
+              <div className="absolute inset-0 rounded-full border-2 border-[var(--border)]" />
+              <div className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-[var(--accent)]" />
+            </div>
 
             <div>
-              <h3 className="font-semibold text-blue-900">
-                Processing Receipt
+              <h3 className="text-sm font-semibold text-[var(--text)]">
+                Processing your receipt
               </h3>
-
-              <p className="text-sm text-blue-700">
-                This may take 10–20 seconds
+              <p className="text-xs text-[var(--text-muted)]">
+                This usually takes 10–20 seconds
               </p>
             </div>
           </div>
 
-          <div className="mt-6 space-y-3">
-            <div className="rounded-lg bg-white p-3">
-              📤 Uploading receipt image
-            </div>
-
-            <div className="rounded-lg bg-white p-3">
-              🤖 Extracting receipt data with AI
-            </div>
-
-            <div className="rounded-lg bg-white p-3">
-              ⚖️ Calculating fair split
-            </div>
-
-            <div className="rounded-lg bg-white p-3">
-              💸 Generating settlements
-            </div>
+          <div className="mt-5 space-y-2">
+            {PROCESSING_STEPS.map((step, i) => (
+              <div
+                key={step.label}
+                className="flex items-center gap-3 rounded-xl bg-[var(--surface-2)] px-3 py-2.5 text-sm text-[var(--text)] animate-fade-up"
+                style={{ animationDelay: `${i * 120}ms` }}
+              >
+                <span className="text-base" aria-hidden>
+                  {step.emoji}
+                </span>
+                <span>{step.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       )}
 
+      {/* Results */}
       {response?.data && (
-        <>
-          <div className="mt-8 flex justify-end">
+        <div className="space-y-5">
+          <div className="flex items-center justify-between animate-fade-up">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
+                Split ready
+              </p>
+              <h2 className="text-lg font-semibold text-[var(--text)]">
+                Here&apos;s the breakdown
+              </h2>
+            </div>
+
             <button
               type="button"
               onClick={resetForm}
-              className="rounded-lg bg-slate-700 px-4 py-2 text-white transition hover:bg-slate-800"
+              className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)]/50"
             >
-              Analyze Another Receipt
+              New receipt
             </button>
           </div>
 
-          <ResultsSection
-            people={response.data.per_person}
+          <SettlementSummary settlements={response.data.settle_up} />
+
+          <ResultsSection people={response.data.per_person} />
+
+          <BillSummary
+            grandTotal={response.data.grand_total}
+            paidBy={response.data.paid_by}
+            reconciliation={response.data.reconciliation}
+            flags={response.data.flags}
+            assumptions={response.data.assumptions}
           />
-
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            <SettlementSummary
-              settlements={
-                response.data.settle_up
-              }
-            />
-
-            <BillSummary
-              grandTotal={
-                response.data.grand_total
-              }
-              paidBy={
-                response.data.paid_by
-              }
-              reconciliation={
-                response.data.reconciliation
-              }
-              flags={response.data.flags}
-              assumptions={
-                response.data.assumptions
-              }
-            />
-          </div>
-        </>
+        </div>
       )}
     </div>
   );
