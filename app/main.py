@@ -6,6 +6,10 @@ from fastapi import (
     Request,
 )
 
+from fastapi.middleware.cors import (
+    CORSMiddleware,
+)
+
 from fastapi.exceptions import (
     RequestValidationError,
 )
@@ -50,6 +54,27 @@ from app.validators.file_validator import (
 
 app = FastAPI()
 
+# -------------------------------
+# CORS
+# -------------------------------
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# -------------------------------
+# Custom Middleware
+# -------------------------------
+
 app.add_middleware(
     RequestIdMiddleware
 )
@@ -57,6 +82,10 @@ app.add_middleware(
 app.add_middleware(
     RequestLoggingMiddleware
 )
+
+# -------------------------------
+# Exception Handlers
+# -------------------------------
 
 app.add_exception_handler(
     RequestValidationError,
@@ -73,6 +102,10 @@ app.add_exception_handler(
     ErrorHandlerMiddleware.handle_generic_error,
 )
 
+# -------------------------------
+# Services
+# -------------------------------
+
 processor = BillProcessor()
 
 image_processor = (
@@ -83,6 +116,9 @@ image_bill_processor = (
     ImageBillProcessor()
 )
 
+# -------------------------------
+# Routes
+# -------------------------------
 
 @app.get("/")
 def health_check(

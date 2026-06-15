@@ -792,3 +792,864 @@
 2026-06-13 04:34:24,923 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
 2026-06-13 04:34:24,923 | INFO | fairsplit | Fair split response generated
 2026-06-13 04:34:24,923 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=17.155s
+2026-06-13 15:31:57,302 | INFO | fairsplit | [unknown] Started GET /docs
+2026-06-13 15:31:57,304 | INFO | fairsplit | [unknown] Completed GET /docs status=200 duration=0.002s
+2026-06-13 15:31:57,594 | INFO | fairsplit | [unknown] Started GET /openapi.json
+2026-06-13 15:31:57,608 | INFO | fairsplit | [unknown] Completed GET /openapi.json status=200 duration=0.014s
+2026-06-13 15:33:48,818 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-13 15:33:48,835 | INFO | fairsplit | Image bill processing started
+2026-06-13 15:33:48,835 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:34:01,028 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:34:01,031 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-13 15:34:01,031 | INFO | fairsplit | Receipt extracted from image
+2026-06-13 15:34:01,031 | INFO | fairsplit | Receipt validated | items=4
+2026-06-13 15:34:01,032 | INFO | fairsplit | Rules extraction started
+2026-06-13 15:34:01,032 | INFO | fairsplit | Rules prompt generated
+2026-06-13 15:34:01,032 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:34:09,117 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:34:09,118 | INFO | fairsplit | Rules extraction completed
+2026-06-13 15:34:09,118 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton Biriyani and 2 Tandoori Roti. Priya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken. Karan ate 1 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper. Priya paid the bill. Share remaining items equally."
+}
+2026-06-13 15:34:09,118 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-13 15:34:09,118 | INFO | fairsplit | Consumption rules extracted
+2026-06-13 15:34:09,118 | INFO | fairsplit | Rules validated | participants=3
+2026-06-13 15:34:09,119 | INFO | fairsplit | Starting allocation process
+2026-06-13 15:34:09,119 | INFO | fairsplit | Allocation completed
+2026-06-13 15:34:09,119 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-13 15:34:09,120 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-13 15:34:09,120 | INFO | fairsplit | Fair split response generated
+2026-06-13 15:34:09,135 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=20.317s
+2026-06-13 15:36:35,823 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-13 15:36:35,826 | INFO | fairsplit | Image bill processing started
+2026-06-13 15:36:35,827 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:36:44,468 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:36:44,469 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-13 15:36:44,469 | INFO | fairsplit | Receipt extracted from image
+2026-06-13 15:36:44,469 | INFO | fairsplit | Receipt validated | items=4
+2026-06-13 15:36:44,470 | INFO | fairsplit | Rules extraction started
+2026-06-13 15:36:44,470 | INFO | fairsplit | Rules prompt generated
+2026-06-13 15:36:44,470 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:36:54,913 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:36:54,914 | INFO | fairsplit | Rules extraction completed
+2026-06-13 15:36:54,915 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Chilly Chicken",
+      "consumers": ["Priya", "Karan"]
+    },
+    {
+      "item": "Chicken Pepper",
+      "consumers": ["Karan"]
+    }
+  ],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton Biriyani and 2 Tandoori Roti. Priya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken. Karan ate 1 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper. Priya paid the bill. Share remaining items equally."
+}
+2026-06-13 15:36:54,915 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-13 15:36:54,915 | INFO | fairsplit | Consumption rules extracted
+2026-06-13 15:36:54,915 | INFO | fairsplit | Rules validated | participants=3
+2026-06-13 15:36:54,915 | INFO | fairsplit | Starting allocation process
+2026-06-13 15:36:54,916 | INFO | fairsplit | Allocation completed
+2026-06-13 15:36:54,916 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-13 15:36:54,916 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-13 15:36:54,916 | INFO | fairsplit | Fair split response generated
+2026-06-13 15:36:54,917 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=19.094s
+2026-06-13 15:40:12,081 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-13 15:40:12,084 | INFO | fairsplit | Image bill processing started
+2026-06-13 15:40:12,085 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:40:20,135 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:40:20,137 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-13 15:40:20,137 | INFO | fairsplit | Receipt extracted from image
+2026-06-13 15:40:20,137 | INFO | fairsplit | Receipt validated | items=4
+2026-06-13 15:40:20,137 | INFO | fairsplit | Rules extraction started
+2026-06-13 15:40:20,137 | INFO | fairsplit | Rules prompt generated
+2026-06-13 15:40:20,138 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:40:30,252 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:40:30,253 | INFO | fairsplit | Rules extraction completed
+2026-06-13 15:40:30,254 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton Biriyani and 2 Tandoori Roti.\nPriya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken.\nKaran ate 1 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper.\nPriya paid the bill.\nShare remaining items equally."
+}
+2026-06-13 15:40:30,254 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-13 15:40:30,254 | INFO | fairsplit | Consumption rules extracted
+2026-06-13 15:40:30,254 | INFO | fairsplit | Rules validated | participants=3
+2026-06-13 15:40:30,254 | INFO | fairsplit | Starting allocation process
+2026-06-13 15:40:30,255 | INFO | fairsplit | Allocation completed
+2026-06-13 15:40:30,255 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-13 15:40:30,255 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-13 15:40:30,255 | INFO | fairsplit | Fair split response generated
+2026-06-13 15:40:30,256 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=18.175s
+2026-06-13 15:49:11,722 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-13 15:49:11,724 | INFO | fairsplit | Image bill processing started
+2026-06-13 15:49:11,724 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:49:18,601 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:49:18,603 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-13 15:49:18,603 | INFO | fairsplit | Receipt extracted from image
+2026-06-13 15:49:18,604 | INFO | fairsplit | Receipt validated | items=4
+2026-06-13 15:49:18,604 | INFO | fairsplit | Rules extraction started
+2026-06-13 15:49:18,604 | INFO | fairsplit | Rules prompt generated
+2026-06-13 15:49:18,604 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-13 15:49:27,726 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-13 15:49:27,727 | INFO | fairsplit | Rules extraction completed
+2026-06-13 15:49:27,727 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Chilly Chicken",
+      "consumers": ["Priya", "Karan"]
+    },
+    {
+      "item": "Chicken Pepper",
+      "consumers": ["Karan"]
+    }
+  ],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton Biriyani and 2 Tandoori Roti.\nPriya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken.\nKaran ate 1 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper.\nPriya paid the bill.\nShare remaining items equally."
+}
+2026-06-13 15:49:27,727 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-13 15:49:27,727 | INFO | fairsplit | Consumption rules extracted
+2026-06-13 15:49:27,727 | INFO | fairsplit | Rules validated | participants=3
+2026-06-13 15:49:27,727 | INFO | fairsplit | Starting allocation process
+2026-06-13 15:49:27,728 | INFO | fairsplit | Allocation completed
+2026-06-13 15:49:27,728 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-13 15:49:27,728 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-13 15:49:27,729 | INFO | fairsplit | Fair split response generated
+2026-06-13 15:49:27,729 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=16.007s
+2026-06-14 01:52:52,107 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-14 01:52:52,130 | INFO | fairsplit | Image bill processing started
+2026-06-14 01:52:52,132 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 01:53:00,459 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 01:53:00,477 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-14 01:53:00,477 | INFO | fairsplit | Receipt extracted from image
+2026-06-14 01:53:00,477 | INFO | fairsplit | Receipt validated | items=4
+2026-06-14 01:53:00,478 | INFO | fairsplit | Rules extraction started
+2026-06-14 01:53:00,478 | INFO | fairsplit | Rules prompt generated
+2026-06-14 01:53:00,478 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 01:53:08,139 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 01:53:08,140 | INFO | fairsplit | Rules extraction completed
+2026-06-14 01:53:08,140 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Aman", "Priya", "Karan"]
+    },
+    {
+      "item": "Chilly Chicken",
+      "consumers": ["Priya", "Karan"]
+    },
+    {
+      "item": "Chicken Pepper",
+      "consumers": ["Karan"]
+    }
+  ],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton Biriyani and 2 Tandoori Roti.\nPriya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken.\nKaran ate 1 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper.\nPriya paid the bill.\nShare remaining items equally."
+}
+2026-06-14 01:53:08,140 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-14 01:53:08,140 | INFO | fairsplit | Consumption rules extracted
+2026-06-14 01:53:08,141 | INFO | fairsplit | Rules validated | participants=3
+2026-06-14 01:53:08,141 | INFO | fairsplit | Starting allocation process
+2026-06-14 01:53:08,155 | INFO | fairsplit | Allocation completed
+2026-06-14 01:53:08,156 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-14 01:53:08,156 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-14 01:53:08,156 | INFO | fairsplit | Fair split response generated
+2026-06-14 01:53:08,159 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=16.051s
+2026-06-14 01:55:35,707 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-14 01:55:35,710 | INFO | fairsplit | Image bill processing started
+2026-06-14 01:55:35,710 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 01:55:43,922 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 01:55:43,923 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-14 01:55:43,923 | INFO | fairsplit | Receipt extracted from image
+2026-06-14 01:55:43,923 | INFO | fairsplit | Receipt validated | items=4
+2026-06-14 01:55:43,923 | INFO | fairsplit | Rules extraction started
+2026-06-14 01:55:43,923 | INFO | fairsplit | Rules prompt generated
+2026-06-14 01:55:43,924 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 01:55:57,410 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 01:55:57,411 | INFO | fairsplit | Rules extraction completed
+2026-06-14 01:55:57,411 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 1 Mutton Biriyani and 2 Tandoori Roti.\nPriya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken.\nKaran ate 2 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper.\nPriya paid the bill.\nShare remaining items equally."
+}
+2026-06-14 01:55:57,411 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-14 01:55:57,412 | INFO | fairsplit | Consumption rules extracted
+2026-06-14 01:55:57,412 | INFO | fairsplit | Rules validated | participants=3
+2026-06-14 01:55:57,412 | INFO | fairsplit | Starting allocation process
+2026-06-14 01:55:57,412 | INFO | fairsplit | Allocation completed
+2026-06-14 01:55:57,413 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-14 01:55:57,413 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-14 01:55:57,413 | INFO | fairsplit | Fair split response generated
+2026-06-14 01:55:57,414 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=21.707s
+2026-06-14 02:03:54,734 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-14 02:03:54,736 | INFO | fairsplit | Image bill processing started
+2026-06-14 02:03:54,737 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 02:04:01,361 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 02:04:01,362 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-14 02:04:01,362 | INFO | fairsplit | Receipt extracted from image
+2026-06-14 02:04:01,362 | INFO | fairsplit | Receipt validated | items=4
+2026-06-14 02:04:01,362 | INFO | fairsplit | Rules extraction started
+2026-06-14 02:04:01,362 | INFO | fairsplit | Rules prompt generated
+2026-06-14 02:04:01,363 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 02:04:09,247 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 02:04:09,249 | INFO | fairsplit | Rules extraction completed
+2026-06-14 02:04:09,249 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "consumers": ["Aman"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Aman"]
+    },
+    {
+      "item": "Mutton Biriyani",
+      "consumers": ["Priya"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Priya"]
+    },
+    {
+      "item": "Chilly Chicken",
+      "consumers": ["Priya"]
+    },
+    {
+      "item": "Mutton Biriyani",
+      "consumers": ["Karan"]
+    },
+    {
+      "item": "Tandoori Roti",
+      "consumers": ["Karan"]
+    },
+    {
+      "item": "Chilly Chicken",
+      "consumers": ["Karan"]
+    },
+    {
+      "item": "Chicken Pepper",
+      "consumers": ["Karan"]
+    }
+  ],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 1 Mutton Biriyani and 2 Tandoori Roti.\nPriya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken.\nKaran ate 2 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper.\nPriya paid the bill.\nShare remaining items equally."
+}
+2026-06-14 02:04:09,250 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-14 02:04:09,250 | INFO | fairsplit | Consumption rules extracted
+2026-06-14 02:04:09,250 | INFO | fairsplit | Rules validated | participants=3
+2026-06-14 02:04:09,250 | INFO | fairsplit | Starting allocation process
+2026-06-14 02:04:09,251 | INFO | fairsplit | Allocation completed
+2026-06-14 02:04:09,252 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-14 02:04:09,252 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-14 02:04:09,252 | INFO | fairsplit | Fair split response generated
+2026-06-14 02:04:09,253 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=14.519s
+2026-06-14 02:06:30,230 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-14 02:06:30,231 | INFO | fairsplit | Image bill processing started
+2026-06-14 02:06:30,232 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 02:06:38,731 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 02:06:38,732 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-14 02:06:38,733 | INFO | fairsplit | Receipt extracted from image
+2026-06-14 02:06:38,733 | INFO | fairsplit | Receipt validated | items=4
+2026-06-14 02:06:38,733 | INFO | fairsplit | Rules extraction started
+2026-06-14 02:06:38,733 | INFO | fairsplit | Rules prompt generated
+2026-06-14 02:06:38,733 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 02:06:46,740 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 02:06:46,741 | INFO | fairsplit | Rules extraction completed
+2026-06-14 02:06:46,742 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 2 Mutton Biriyani and 2 Tandoori Roti. Priya ate 1 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken. Karan ate 1 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper. Priya paid the bill. Share remaining items equally."
+}
+2026-06-14 02:06:46,742 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-14 02:06:46,742 | INFO | fairsplit | Consumption rules extracted
+2026-06-14 02:06:46,742 | INFO | fairsplit | Rules validated | participants=3
+2026-06-14 02:06:46,742 | INFO | fairsplit | Starting allocation process
+2026-06-14 02:06:46,743 | INFO | fairsplit | Allocation completed
+2026-06-14 02:06:46,743 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-14 02:06:46,743 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-14 02:06:46,743 | INFO | fairsplit | Fair split response generated
+2026-06-14 02:06:46,744 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=16.514s
+2026-06-14 02:07:15,632 | INFO | fairsplit | [unknown] Started POST /split-bill-image
+2026-06-14 02:07:15,634 | INFO | fairsplit | Image bill processing started
+2026-06-14 02:07:15,635 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 02:07:25,142 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 02:07:25,144 | INFO | fairsplit | Receipt JSON parsed successfully
+2026-06-14 02:07:25,144 | INFO | fairsplit | Receipt extracted from image
+2026-06-14 02:07:25,144 | INFO | fairsplit | Receipt validated | items=4
+2026-06-14 02:07:25,145 | INFO | fairsplit | Rules extraction started
+2026-06-14 02:07:25,145 | INFO | fairsplit | Rules prompt generated
+2026-06-14 02:07:25,145 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-06-14 02:07:32,004 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-14 02:07:32,005 | INFO | fairsplit | Rules extraction completed
+2026-06-14 02:07:32,005 | INFO | fairsplit | Raw Gemini rules response: {
+  "participants": [
+    "Aman",
+    "Priya",
+    "Karan"
+  ],
+  "ownership_rules": [],
+  "exclusion_rules": [],
+  "payments": [
+    {
+      "person": "Priya",
+      "amount": null
+    }
+  ],
+  "item_quantity_rules": [
+    {
+      "item": "Mutton Biriyani",
+      "person": "Aman",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Aman",
+      "quantity": 2
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Priya",
+      "quantity": 2
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Priya",
+      "quantity": 1
+    },
+    {
+      "item": "Mutton Biriyani",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Tandoori Roti",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chilly Chicken",
+      "person": "Karan",
+      "quantity": 1
+    },
+    {
+      "item": "Chicken Pepper",
+      "person": "Karan",
+      "quantity": 2
+    }
+  ],
+  "shared_remaining_items": true,
+  "raw_description": "Aman ate 1 Mutton Biriyani and 2 Tandoori Roti.\nPriya ate 2 Mutton Biriyani, 2 Tandoori Roti and 1 Chilly Chicken.\nKaran ate 1 Mutton Biriyani, 1 Tandoori Roti, 1 Chilly Chicken and 2 Chicken Pepper.\nPriya paid the bill.\nShare remaining items equally."
+}
+2026-06-14 02:07:32,005 | INFO | fairsplit | Rules JSON parsed successfully
+2026-06-14 02:07:32,006 | INFO | fairsplit | Consumption rules extracted
+2026-06-14 02:07:32,006 | INFO | fairsplit | Rules validated | participants=3
+2026-06-14 02:07:32,006 | INFO | fairsplit | Starting allocation process
+2026-06-14 02:07:32,006 | INFO | fairsplit | Allocation completed
+2026-06-14 02:07:32,007 | INFO | fairsplit | Shared remainder allocation triggered for 1 item(s)
+2026-06-14 02:07:32,007 | INFO | fairsplit | Response generated successfully. Participants=3 Settlements=2
+2026-06-14 02:07:32,007 | INFO | fairsplit | Fair split response generated
+2026-06-14 02:07:32,007 | INFO | fairsplit | [unknown] Completed POST /split-bill-image status=200 duration=16.375s
+2026-06-15 15:20:04,113 | INFO | fairsplit | [unknown] Started GET /docs
+2026-06-15 15:20:04,115 | INFO | fairsplit | [unknown] Completed GET /docs status=200 duration=0.003s
+2026-06-15 15:20:04,324 | INFO | fairsplit | [unknown] Started GET /openapi.json
+2026-06-15 15:20:04,333 | INFO | fairsplit | [unknown] Completed GET /openapi.json status=200 duration=0.009s
