@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { splitBill } from "../lib/api";
 
 import ResultsSection from "./ResultsSection";
 import SettlementSummary from "./SettlementSummary";
 import BillSummary from "./BillSummary";
+import ClarificationSection from "./ClarificationSection";
 
 import { SplitBillResponse } from "../types/api";
 
@@ -29,6 +30,10 @@ export default function ReceiptUploadForm() {
 
   const dropRef = useRef<HTMLLabelElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isListening, setIsListening] =
+  useState(false);
+
+const recognitionRef = useRef<any>(null);
 
   function applyFile(selectedFile: File | null) {
     setFile(selectedFile);
@@ -79,7 +84,7 @@ export default function ReceiptUploadForm() {
     setFileInputKey((prev) => prev + 1);
   }
 
-  const showForm = !response?.data;
+  const showForm = !response;
 
   return (
     <div className="w-full">
@@ -259,10 +264,11 @@ export default function ReceiptUploadForm() {
           <div className="flex items-center justify-between animate-fade-up">
             <div>
               <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
-                Split ready
+                Processing complete
               </p>
+
               <h2 className="text-lg font-semibold text-[var(--text)]">
-                Here&apos;s the breakdown
+                Fair Split Result
               </h2>
             </div>
 
@@ -275,17 +281,31 @@ export default function ReceiptUploadForm() {
             </button>
           </div>
 
-          <SettlementSummary settlements={response.data.settle_up} />
+          {response.data.status === "needs_clarification" && (
+            <ClarificationSection
+              questions={response.data.clarification?.questions || []}
+            />
+          )}
 
-          <ResultsSection people={response.data.per_person} />
+          {response.data.status === "completed" && response.data.data && (
+            <>
+              <SettlementSummary
+                settlements={response.data.data.settle_up}
+              />
 
-          <BillSummary
-            grandTotal={response.data.grand_total}
-            paidBy={response.data.paid_by}
-            reconciliation={response.data.reconciliation}
-            flags={response.data.flags}
-            assumptions={response.data.assumptions}
-          />
+              <ResultsSection
+                people={response.data.data.per_person}
+              />
+
+              <BillSummary
+                grandTotal={response.data.data.grand_total}
+                paidBy={response.data.data.paid_by}
+                reconciliation={response.data.data.reconciliation}
+                flags={response.data.data.flags}
+                assumptions={response.data.data.assumptions}
+              />
+            </>
+          )}
         </div>
       )}
     </div>

@@ -2,6 +2,15 @@ from app.models.receipt import Receipt
 from app.models.rules import ConsumptionRules
 from app.models.response import FairSplitResponse
 
+from app.models.split_result import (
+    SplitResult,
+)
+
+from app.models.clarification import (
+    ClarificationResponse,
+    ClarificationQuestion,
+)
+
 from app.services.allocation_engine import AllocationEngine
 
 from app.services.quantity_reconciliation_engine import (
@@ -60,7 +69,7 @@ class FairSplitService:
         self,
         receipt: Receipt,
         rules: ConsumptionRules,
-    ) -> FairSplitResponse:
+    ) -> SplitResult:
 
         logger.info(
             "Starting allocation process"
@@ -84,35 +93,66 @@ class FairSplitService:
             )
         )
 
-        if (
-            rules.shared_remaining_items
-            and unallocated_items
-        ):
+        if unallocated_items:
 
-            logger.info(
-                f"Shared remainder allocation triggered "
-                f"for {len(unallocated_items)} item(s)"
-            )
+            if rules.shared_remaining_items:
 
-            breakdowns = (
-                self.shared_remaining_allocation_engine.allocate(
-                    breakdowns=breakdowns,
-                    unallocated_items=unallocated_items,
-                    participant_count=len(
-                        rules.participants
+                logger.info(
+                    f"Shared remainder allocation triggered "
+                    f"for {len(unallocated_items)} item(s)"
+                )
+
+                breakdowns = (
+                    self.shared_remaining_allocation_engine.allocate(
+                        breakdowns=breakdowns,
+                        unallocated_items=unallocated_items,
+                        participant_count=len(
+                            rules.participants
+                        ),
+                    )
+                )
+
+                unallocated_items = []
+
+            else:
+
+                logger.info(
+                    f"Clarification required for "
+                    f"{len(unallocated_items)} item(s)"
+                )
+
+                questions = []
+
+                for index, item in enumerate(
+                    unallocated_items
+                ):
+
+                    questions.append(
+                        ClarificationQuestion(
+                            id=f"q{index + 1}",
+                            type="unallocated_item",
+                            item=item.item,
+                            remaining_quantity=item.remaining_quantity,
+                            remaining_amount=item.remaining_amount,
+                            question=(
+                                f"Who consumed "
+                                f"{item.item}?"
+                            ),
+                        )
+                    )
+
+                return SplitResult(
+                    status="needs_clarification",
+                    clarification=ClarificationResponse(
+                        questions=questions
                     ),
                 )
-            )
-
-            unallocated_items = []
 
         breakdowns = (
             self.drift_correction_engine.correct(
                 breakdowns=breakdowns,
                 grand_total=receipt.grand_total,
-                allow_correction=(
-                    len(unallocated_items) == 0
-                ),
+                allow_correction=True,
             )
         )
 
@@ -145,24 +185,22 @@ class FairSplitService:
             rules.flags
         )
 
-        if unallocated_items:
-            flags.append(
-                "Receipt contains quantities that were not allocated."
-            )
-
         logger.info(
             f"Response generated successfully. "
             f"Participants={len(breakdowns)} "
             f"Settlements={len(settlements)}"
         )
 
-        return FairSplitResponse(
-            per_person=breakdowns,
-            grand_total=receipt.grand_total,
-            reconciliation=reconciliation,
-            paid_by=paid_by,
-            settle_up=settlements,
-            assumptions=assumptions,
-            flags=flags,
-            unallocated_items=unallocated_items,
+        return SplitResult(
+            status="completed",
+            data=FairSplitResponse(
+                per_person=breakdowns,
+                grand_total=receipt.grand_total,
+                reconciliation=reconciliation,
+                paid_by=paid_by,
+                settle_up=settlements,
+                assumptions=assumptions,
+                flags=flags,
+                unallocated_items=[],
+            ),
         )

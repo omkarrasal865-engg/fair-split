@@ -1,6 +1,6 @@
 type Props = {
   grandTotal: number;
-  paidBy: string;
+  paidBy: string | null;
   reconciliation: {
     matches_bill: boolean;
     difference: number;
@@ -41,7 +41,9 @@ export default function BillSummary({
 
           <div className="flex items-center justify-between">
             <span className="text-[var(--text-muted)]">Paid by</span>
-            <span className="font-medium text-[var(--text)]">{paidBy}</span>
+            <span className="font-medium text-[var(--text)]">
+              {paidBy ?? "Not specified"}
+            </span>
           </div>
 
           <div className="flex items-center justify-between border-t border-[var(--border)] pt-2">

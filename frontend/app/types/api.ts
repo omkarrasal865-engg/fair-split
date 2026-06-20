@@ -21,17 +21,41 @@ export interface Reconciliation {
   matches_bill: boolean;
 }
 
+export interface CompletedSplitData {
+  per_person: PersonResult[];
+  grand_total: number;
+  reconciliation: Reconciliation;
+  paid_by: string | null;
+  settle_up: Settlement[];
+  assumptions: string[];
+  flags: string[];
+}
+
+export interface ClarificationQuestion {
+  id: string;
+  type: string;
+  item: string;
+  remaining_quantity: number;
+  remaining_amount: number;
+  question: string;
+}
+
+export interface ClarificationResponse {
+  questions: ClarificationQuestion[];
+}
+
+export interface SplitResult {
+  status: "completed" | "needs_clarification";
+
+  data: CompletedSplitData | null;
+
+  clarification: ClarificationResponse | null;
+}
+
 export interface SplitBillResponse {
   success: boolean;
+
   request_id: string;
-  data: {
-    per_person: PersonResult[];
-    grand_total: number;
-    reconciliation: Reconciliation;
-    paid_by: string;
-    settle_up: Settlement[];
-    assumptions: string[];
-    flags: string[];
-    unallocated_items: string[];
-  };
+
+  data: SplitResult;
 }

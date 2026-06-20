@@ -5,7 +5,7 @@ type Settlement = {
 };
 
 type Props = {
-  settlements: Settlement[];
+  settlements?: Settlement[];
 };
 
 function formatAmount(value: number) {
@@ -15,13 +15,16 @@ function formatAmount(value: number) {
   });
 }
 
-export default function SettlementSummary({ settlements }: Props) {
+export default function SettlementSummary({
+  settlements = [],
+}: Props) {
   return (
     <div className="animate-fade-up">
       <div className="mb-3 px-1">
         <h3 className="text-sm font-semibold text-[var(--text)]">
           Settle up
         </h3>
+
         <p className="text-xs text-[var(--text-muted)]">
           {settlements.length === 0
             ? "Everyone's even — nothing to settle."
@@ -34,6 +37,7 @@ export default function SettlementSummary({ settlements }: Props) {
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--accent-dim)] text-lg">
             ✅
           </div>
+
           <p className="text-sm text-[var(--text)]">
             No settlements required.
           </p>
@@ -49,9 +53,14 @@ export default function SettlementSummary({ settlements }: Props) {
                 <span className="rounded-full bg-[var(--surface-2)] px-2.5 py-1">
                   {settlement.from_person}
                 </span>
-                <span className="text-[var(--text-muted)]" aria-hidden>
+
+                <span
+                  className="text-[var(--text-muted)]"
+                  aria-hidden
+                >
                   →
                 </span>
+
                 <span className="rounded-full bg-[var(--surface-2)] px-2.5 py-1">
                   {settlement.to_person}
                 </span>

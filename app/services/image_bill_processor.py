@@ -1,11 +1,15 @@
 from app.ai.image_receipt_extractor import (
     ImageReceiptExtractor,
 )
-from app.ai.rules_extractor import RulesExtractor
+
+from app.ai.rules_extractor import (
+    RulesExtractor,
+)
 
 from app.validators.receipt_validator import (
     ReceiptValidator,
 )
+
 from app.validators.rules_validator import (
     RulesValidator,
 )
@@ -14,8 +18,8 @@ from app.services.fair_split_service import (
     FairSplitService,
 )
 
-from app.models.response import (
-    FairSplitResponse,
+from app.models.split_result import (
+    SplitResult,
 )
 
 from app.utils.logger import (
@@ -52,7 +56,7 @@ class ImageBillProcessor:
         image_bytes: bytes,
         mime_type: str,
         description: str,
-    ) -> FairSplitResponse:
+    ) -> SplitResult:
 
         logger.info(
             "Image bill processing started"
@@ -107,7 +111,7 @@ class ImageBillProcessor:
         )
 
         logger.info(
-            "Fair split response generated"
+            f"Processing completed with status={response.status}"
         )
 
         return response
