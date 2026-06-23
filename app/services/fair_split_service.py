@@ -1,3 +1,6 @@
+from app.services.session_store import (
+    SessionStore,
+)
 from app.models.receipt import Receipt
 from app.models.rules import ConsumptionRules
 from app.models.response import FairSplitResponse
@@ -15,6 +18,10 @@ from app.services.allocation_engine import AllocationEngine
 
 from app.services.quantity_reconciliation_engine import (
     QuantityReconciliationEngine,
+)
+
+from app.services.insight_engine import (
+    InsightEngine,
 )
 
 from app.services.shared_remaining_allocation_engine import (
@@ -47,6 +54,10 @@ class FairSplitService:
 
         self.quantity_reconciliation_engine = (
             QuantityReconciliationEngine()
+        )
+       
+        self.insight_engine = (
+             InsightEngine()
         )
 
         self.shared_remaining_allocation_engine = (
@@ -138,11 +149,24 @@ class FairSplitService:
                                 f"Who consumed "
                                 f"{item.item}?"
                             ),
+                            participants=
+                                rules.participants,
                         )
                     )
 
+                session_id = (
+                    SessionStore.create(
+                        receipt=receipt,
+                        rules=rules,
+                        unallocated_items=unallocated_items,
+                    )
+                )
+
                 return SplitResult(
                     status="needs_clarification",
+
+                    session_id=session_id,
+
                     clarification=ClarificationResponse(
                         questions=questions
                     ),
@@ -191,16 +215,39 @@ class FairSplitService:
             f"Settlements={len(settlements)}"
         )
 
+        insights = (
+    self.insight_engine.generate(
+        receipt=receipt,
+        breakdowns=breakdowns,
+    )
+)
+
         return SplitResult(
             status="completed",
             data=FairSplitResponse(
                 per_person=breakdowns,
+
                 grand_total=receipt.grand_total,
+
                 reconciliation=reconciliation,
+
                 paid_by=paid_by,
+
                 settle_up=settlements,
+
                 assumptions=assumptions,
+
                 flags=flags,
+
                 unallocated_items=[],
+
+                merchant_name=
+                    receipt.merchant_name,
+
+                expense_category=
+                    receipt.expense_category,
+
+                insights=insights,
             ),
         )
+    

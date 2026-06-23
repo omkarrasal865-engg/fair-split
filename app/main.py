@@ -6,6 +6,14 @@ from fastapi import (
     Request,
 )
 
+from app.models.clarification_answer import (
+    ClarificationRequest,
+)
+
+from app.services.clarification_service import (
+    ClarificationService,
+)
+
 from fastapi.middleware.cors import (
     CORSMiddleware,
 )
@@ -19,6 +27,10 @@ from app.models.api import (
     ApiSuccessResponse,
 )
 
+from app.models.clarification_answer import (
+    ClarificationRequest,
+)
+
 from app.services.bill_processor import (
     BillProcessor,
 )
@@ -29,6 +41,10 @@ from app.services.image_receipt_processor import (
 
 from app.services.image_bill_processor import (
     ImageBillProcessor,
+)
+
+from app.services.clarification_service import (
+    ClarificationService,
 )
 
 from app.middleware.error_handler import (
@@ -111,6 +127,10 @@ image_bill_processor = (
     ImageBillProcessor()
 )
 
+clarification_service = (
+    ClarificationService()
+)
+
 # -------------------------------
 # Routes
 # -------------------------------
@@ -123,7 +143,7 @@ def health_check(
         request_id=request.state.request_id,
         data={
             "status": "healthy",
-            "project": "Fair Split",
+            "project": "FairSplit AI",
         },
     ).model_dump()
 
@@ -186,6 +206,45 @@ async def split_bill_image(
         image_bytes=image_bytes,
         mime_type=file.content_type,
         description=description,
+    )
+
+    return ApiSuccessResponse(
+        request_id=request.state.request_id,
+        data=response.model_dump(),
+    ).model_dump()
+
+
+@app.post("/submit-clarification")
+def submit_clarification(
+    clarification_request: ClarificationRequest,
+    request: Request,
+):
+
+    response = (
+        clarification_service.process(
+            clarification_request
+        )
+    )
+
+    return ApiSuccessResponse(
+        request_id=request.state.request_id,
+        data=response.model_dump(),
+    ).model_dump()
+
+@app.post(
+    "/clarification/{session_id}"
+)
+def submit_clarification(
+    session_id: str,
+    request_data: ClarificationRequest,
+    request: Request,
+):
+
+    response = (
+        clarification_service.process(
+            session_id=session_id,
+            clarification_request=request_data,
+        )
     )
 
     return ApiSuccessResponse(

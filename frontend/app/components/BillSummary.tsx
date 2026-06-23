@@ -1,11 +1,21 @@
 type Props = {
   grandTotal: number;
+
   paidBy: string | null;
+
+  merchantName?: string | null;
+
+  expenseCategory?: string;
+
+  insights?: string[];
+
   reconciliation: {
     matches_bill: boolean;
     difference: number;
   };
+
   flags: string[];
+
   assumptions: string[];
 };
 
@@ -19,13 +29,74 @@ function formatAmount(value: number) {
 export default function BillSummary({
   grandTotal,
   paidBy,
+  merchantName,
+  expenseCategory,
+  insights = [],
   reconciliation,
   flags,
   assumptions,
 }: Props) {
   return (
     <div className="space-y-2.5 animate-fade-up">
-      {/* Bill summary card */}
+
+      {/* Merchant Card */}
+
+      {(merchantName || expenseCategory) && (
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+          <h3 className="mb-3 text-sm font-semibold text-[var(--text)]">
+            Expense Details
+          </h3>
+
+          {merchantName && (
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[var(--text-muted)]">
+                Merchant
+              </span>
+
+              <span className="font-medium text-[var(--text)]">
+                {merchantName}
+              </span>
+            </div>
+          )}
+
+          {expenseCategory && (
+            <div className="flex items-center justify-between">
+              <span className="text-[var(--text-muted)]">
+                Category
+              </span>
+
+              <span className="rounded-full bg-[var(--accent-dim)] px-3 py-1 text-xs font-medium text-[var(--accent)]">
+                {expenseCategory}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* AI Insights */}
+
+      {insights.length > 0 && (
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+          <h3 className="mb-3 text-sm font-semibold text-[var(--text)]">
+            🧠 AI Insights
+          </h3>
+
+          <ul className="space-y-2 text-sm text-[var(--text)]">
+            {insights.map((insight, index) => (
+              <li
+                key={index}
+                className="flex items-start gap-2"
+              >
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />
+                <span>{insight}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Bill Summary */}
+
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
         <h3 className="mb-3 text-sm font-semibold text-[var(--text)]">
           Bill summary
@@ -33,29 +104,42 @@ export default function BillSummary({
 
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
-            <span className="text-[var(--text-muted)]">Grand total</span>
+            <span className="text-[var(--text-muted)]">
+              Grand total
+            </span>
+
             <span className="num font-semibold text-[var(--text)]">
               ₹{formatAmount(grandTotal)}
             </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-[var(--text-muted)]">Paid by</span>
+            <span className="text-[var(--text-muted)]">
+              Paid by
+            </span>
+
             <span className="font-medium text-[var(--text)]">
               {paidBy ?? "Not specified"}
             </span>
           </div>
 
           <div className="flex items-center justify-between border-t border-[var(--border)] pt-2">
-            <span className="text-[var(--text-muted)]">Reconciliation</span>
+            <span className="text-[var(--text-muted)]">
+              Reconciliation
+            </span>
+
             {reconciliation.matches_bill ? (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-dim)] px-2.5 py-1 text-xs font-medium text-[var(--accent)]">
-                <span aria-hidden>✓</span> Matches bill
+                ✓ Matches bill
               </span>
             ) : (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--danger-dim)] px-2.5 py-1 text-xs font-medium text-[var(--danger)]">
-                <span aria-hidden>⚠</span> Off by ₹
-                {formatAmount(Math.abs(reconciliation.difference))}
+                ⚠ Off by ₹
+                {formatAmount(
+                  Math.abs(
+                    reconciliation.difference
+                  )
+                )}
               </span>
             )}
           </div>
@@ -63,14 +147,19 @@ export default function BillSummary({
       </div>
 
       {/* Flags */}
+
       {flags.length > 0 && (
         <div className="rounded-2xl border border-[var(--warn)]/25 bg-[var(--warn-dim)] p-4">
           <h3 className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-[var(--warn)]">
-            <span aria-hidden>⚠️</span> Flags
+            ⚠️ Flags
           </h3>
+
           <ul className="space-y-1.5 text-sm text-[var(--text)]">
             {flags.map((flag, index) => (
-              <li key={index} className="flex items-start gap-2">
+              <li
+                key={index}
+                className="flex items-start gap-2"
+              >
                 <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--warn)]" />
                 <span>{flag}</span>
               </li>
@@ -80,14 +169,19 @@ export default function BillSummary({
       )}
 
       {/* Assumptions */}
+
       {assumptions.length > 0 && (
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
           <h3 className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-[var(--text)]">
-            <span aria-hidden>💡</span> Assumptions
+            💡 Assumptions
           </h3>
+
           <ul className="space-y-1.5 text-sm text-[var(--text-muted)]">
             {assumptions.map((assumption, index) => (
-              <li key={index} className="flex items-start gap-2">
+              <li
+                key={index}
+                className="flex items-start gap-2"
+              >
                 <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--text-muted)]" />
                 <span>{assumption}</span>
               </li>

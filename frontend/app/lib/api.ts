@@ -1,4 +1,4 @@
-const API_BASE_URL = 
+const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://127.0.0.1:8000";
 
@@ -20,7 +20,36 @@ export async function splitBill(
   );
 
   if (!response.ok) {
-    throw new Error("Failed to process receipt");
+    throw new Error(
+      "Failed to process receipt"
+    );
+  }
+
+  return response.json();
+}
+
+export async function submitClarification(
+  sessionId: string,
+  answers: any[]
+) {
+  const response = await fetch(
+    `${API_BASE_URL}/clarification/${sessionId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        answers,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      "Failed to submit clarification"
+    );
   }
 
   return response.json();

@@ -14,8 +14,27 @@ class ClarificationQuestion(BaseModel):
 
     question: str
 
+    participants: list[str]
+
 
 class ClarificationResponse(BaseModel):
     questions: list[
         ClarificationQuestion
+    ]
+
+
+class ClarificationAnswer(BaseModel):
+    question_id: str
+
+    allocations: dict[
+        str,
+        float,
+    ]
+
+
+class ClarificationSubmission(BaseModel):
+    session_id: str
+
+    answers: list[
+        ClarificationAnswer
     ]

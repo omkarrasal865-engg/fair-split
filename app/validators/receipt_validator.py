@@ -2,8 +2,18 @@ from app.models.raw_receipt import RawReceiptExtraction
 from app.models.receipt import Receipt, ReceiptItem
 from app.models.validation import ReceiptValidationResult
 
+from app.services.expense_classifier import (
+    ExpenseClassifier,
+)
+
 
 class ReceiptValidator:
+
+    def __init__(self):
+        self.expense_classifier = (
+            ExpenseClassifier()
+        )
+
     def validate(
         self,
         raw_receipt: RawReceiptExtraction
@@ -24,7 +34,9 @@ class ReceiptValidator:
                 "Subtotal missing; calculated from line items."
             )
 
-        service_charge = raw_receipt.service_charge
+        service_charge = (
+            raw_receipt.service_charge
+        )
 
         if service_charge is None:
             service_charge = 0
@@ -51,9 +63,12 @@ class ReceiptValidator:
                 "Discount not present on receipt; treated as ₹0."
             )
 
-        grand_total = raw_receipt.grand_total
+        grand_total = (
+            raw_receipt.grand_total
+        )
 
         if grand_total is None:
+
             grand_total = (
                 subtotal
                 + service_charge
@@ -83,7 +98,13 @@ class ReceiptValidator:
             - discount
         )
 
-        if abs(expected_grand_total - grand_total) > 1:
+        if (
+            abs(
+                expected_grand_total
+                - grand_total
+            )
+            > 1
+        ):
             flags.append(
                 f"Expected grand total ₹{expected_grand_total:.2f} "
                 f"does not match extracted grand total ₹{grand_total:.2f}."
@@ -98,6 +119,13 @@ class ReceiptValidator:
             for item in raw_receipt.items
         ]
 
+        expense_category = (
+            self.expense_classifier.classify(
+                merchant_name=raw_receipt.restaurant_name,
+                raw_text=raw_receipt.raw_text,
+            )
+        )
+
         receipt = Receipt(
             items=receipt_items,
             subtotal=subtotal,
@@ -105,6 +133,8 @@ class ReceiptValidator:
             tax=tax,
             discount=discount,
             grand_total=grand_total,
+            merchant_name=raw_receipt.restaurant_name,
+            expense_category=expense_category,
         )
 
         return ReceiptValidationResult(

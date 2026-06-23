@@ -57,3 +57,9 @@ class FairSplitResponse(BaseModel):
     flags: list[str]
 
     unallocated_items: list[UnallocatedItem] = []
+
+    merchant_name: str | None = None
+
+    expense_category: str = "Other"
+
+    insights: list[str] = []

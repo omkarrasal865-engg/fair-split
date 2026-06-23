@@ -18,6 +18,10 @@ from app.services.fair_split_service import (
     FairSplitService,
 )
 
+from app.services.session_store import (
+    SessionStore,
+)
+
 from app.models.split_result import (
     SplitResult,
 )
@@ -109,6 +113,30 @@ class ImageBillProcessor:
                 rules=rules,
             )
         )
+
+        # Save clarification session
+        if (
+            response.status
+            == "needs_clarification"
+        ):
+
+            session_id = (
+                SessionStore.create(
+                    receipt=receipt_validation.receipt,
+                    rules=rules,
+                    unallocated_items=(
+                        response.clarification.questions
+                    ),
+                )
+            )
+
+            response.session_id = (
+                session_id
+            )
+
+            logger.info(
+                f"Clarification session created | session_id={session_id}"
+            )
 
         logger.info(
             f"Processing completed with status={response.status}"

@@ -22,3 +22,5 @@ class SplitResult(BaseModel):
     clarification: (
         ClarificationResponse | None
     ) = None
+
+    session_id: str | None = None

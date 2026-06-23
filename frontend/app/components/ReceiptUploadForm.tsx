@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { splitBill } from "../lib/api";
+import {
+  splitBill,
+} from "../lib/api";
 
 import ResultsSection from "./ResultsSection";
 import SettlementSummary from "./SettlementSummary";
@@ -28,12 +30,68 @@ export default function ReceiptUploadForm() {
 
   const [response, setResponse] = useState<SplitBillResponse | null>(null);
 
+  const [sessionId, setSessionId] =
+  useState<string | null>(null);
+
   const dropRef = useRef<HTMLLabelElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isListening, setIsListening] =
   useState(false);
 
 const recognitionRef = useRef<any>(null);
+
+useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const SpeechRecognition =
+    (window as any).SpeechRecognition ||
+    (window as any).webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    return;
+  }
+
+  const recognition =
+    new SpeechRecognition();
+
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = "en-IN";
+
+  recognition.onresult = (
+    event: any
+  ) => {
+    let transcript = "";
+
+    for (
+      let i = event.resultIndex;
+      i < event.results.length;
+      i++
+    ) {
+      transcript +=
+        event.results[i][0].transcript + " ";
+    }
+
+    if (transcript.trim()) {
+      setDescription((prev) =>
+        prev
+          ? prev + " " + transcript.trim()
+          : transcript.trim()
+      );
+    }
+  };
+
+  recognition.onend = () => {
+    setIsListening(false);
+  };
+
+  recognitionRef.current =
+    recognition;
+
+  return () => {
+    recognition.stop();
+  };
+}, []);
 
   function applyFile(selectedFile: File | null) {
     setFile(selectedFile);
@@ -45,34 +103,78 @@ const recognitionRef = useRef<any>(null);
     }
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function handleSubmit(
+  e: React.FormEvent<HTMLFormElement>
+) {
+  e.preventDefault();
 
-    setError("");
-    setResponse(null);
+  setError("");
+  setResponse(null);
 
-    if (!file) {
-      setError("Please upload a receipt image.");
-      return;
-    }
-
-    if (!description.trim()) {
-      setError("Please enter a description.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      const result = await splitBill(file, description);
-
-      setResponse(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
+  if (!file) {
+    setError(
+      "Please upload a receipt image."
+    );
+    return;
   }
+
+  if (!description.trim()) {
+    setError(
+      "Please enter a description."
+    );
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const result = await splitBill(
+      file,
+      description
+    );
+
+    setResponse(result);
+
+    if (
+      result.data.status ===
+      "needs_clarification"
+    ) {
+      setSessionId(
+        result.data.session_id || null
+      );
+    }
+
+  } catch (err) {
+    setError(
+      err instanceof Error
+        ? err.message
+        : "Something went wrong."
+    );
+  } finally {
+    setLoading(false);
+  }
+}
+
+  function startListening() {
+  if (
+    !recognitionRef.current
+  ) {
+    alert(
+      "Voice recognition is not supported in this browser."
+    );
+    return;
+  }
+
+  setIsListening(true);
+
+  recognitionRef.current.start();
+}
+
+function stopListening() {
+  recognitionRef.current?.stop();
+
+  setIsListening(false);
+}
 
   function resetForm() {
     setFile(null);
@@ -184,9 +286,30 @@ const recognitionRef = useRef<any>(null);
 
           {/* Description */}
           <div>
-            <label className="mb-2 block text-sm font-medium text-[var(--text)]">
-              Who had what?
-            </label>
+            <div className="mb-2 flex items-center justify-between">
+  <label className="text-sm font-medium text-[var(--text)]">
+    Who had what?
+  </label>
+
+  <button
+    type="button"
+    disabled={loading}
+    onClick={
+      isListening
+        ? stopListening
+        : startListening
+    }
+    className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+      isListening
+        ? "bg-red-500 text-white"
+        : "bg-[var(--surface-2)] text-[var(--text)]"
+    }`}
+  >
+    {isListening
+      ? "🔴 Listening..."
+      : "🎤 Speak"}
+  </button>
+</div>
 
             <textarea
               rows={6}
@@ -282,10 +405,16 @@ const recognitionRef = useRef<any>(null);
           </div>
 
           {response.data.status === "needs_clarification" && (
-            <ClarificationSection
-              questions={response.data.clarification?.questions || []}
-            />
-          )}
+  <ClarificationSection
+    questions={
+      response.data.clarification?.questions || []
+    }
+    sessionId={sessionId || ""}
+    onCompleted={(result) => {
+      setResponse(result);
+    }}
+  />
+)}
 
           {response.data.status === "completed" && response.data.data && (
             <>
@@ -298,12 +427,27 @@ const recognitionRef = useRef<any>(null);
               />
 
               <BillSummary
-                grandTotal={response.data.data.grand_total}
-                paidBy={response.data.data.paid_by}
-                reconciliation={response.data.data.reconciliation}
-                flags={response.data.data.flags}
-                assumptions={response.data.data.assumptions}
-              />
+               grandTotal={response.data.data.grand_total}
+               paidBy={response.data.data.paid_by}
+               merchantName={
+                 response.data.data.merchant_name
+              }
+               expenseCategory={
+                 response.data.data.expense_category
+               }
+               insights={
+                 response.data.data.insights
+              }
+               reconciliation={
+                 response.data.data.reconciliation
+              }
+               flags={
+                 response.data.data.flags
+              }
+              assumptions={
+                response.data.data.assumptions
+              }
+            />
             </>
           )}
         </div>

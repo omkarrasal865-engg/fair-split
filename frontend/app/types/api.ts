@@ -23,21 +23,40 @@ export interface Reconciliation {
 
 export interface CompletedSplitData {
   per_person: PersonResult[];
+
   grand_total: number;
+
   reconciliation: Reconciliation;
+
   paid_by: string | null;
+
   settle_up: Settlement[];
+
   assumptions: string[];
+
   flags: string[];
+
+  merchant_name: string | null;
+
+  expense_category: string;
+
+  insights: string[];
 }
 
 export interface ClarificationQuestion {
   id: string;
+
   type: string;
+
   item: string;
+
   remaining_quantity: number;
+
   remaining_amount: number;
+
   question: string;
+
+  participants: string[];
 }
 
 export interface ClarificationResponse {
@@ -46,6 +65,8 @@ export interface ClarificationResponse {
 
 export interface SplitResult {
   status: "completed" | "needs_clarification";
+
+  session_id?: string;
 
   data: CompletedSplitData | null;
 

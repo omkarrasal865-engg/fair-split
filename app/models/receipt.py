@@ -16,3 +16,7 @@ class Receipt(BaseModel):
     discount: float
 
     grand_total: float
+
+    merchant_name: str | None = None
+
+    expense_category: str = "Other"
