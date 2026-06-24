@@ -24,6 +24,10 @@ class GeminiClient:
                 "GEMINI_API_KEY not found"
             )
 
+        print(
+            f"GEMINI KEY PREFIX: {api_key[:10]}..."
+        )
+
         self.client = genai.Client(
             api_key=api_key
         )
@@ -68,10 +72,6 @@ class GeminiClient:
                     f"\nGEMINI ERROR:\n{e}"
                 )
 
-                # ------------------
-                # Rate limit (429)
-                # ------------------
-
                 if (
                     "429" in error_message
                     or "resource_exhausted"
@@ -100,10 +100,6 @@ class GeminiClient:
 
                     continue
 
-                # ------------------
-                # Service unavailable
-                # ------------------
-
                 if (
                     "503" in error_message
                     or "unavailable"
@@ -131,10 +127,6 @@ class GeminiClient:
                     )
 
                     continue
-
-                # ------------------
-                # Timeout
-                # ------------------
 
                 if (
                     "timeout"
