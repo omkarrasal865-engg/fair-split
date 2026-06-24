@@ -45,11 +45,9 @@ class GeminiClient:
 
             try:
 
-                response = (
-                    self.client.models.generate_content(
-                        model="gemini-2.5-flash"
-                        contents=contents,
-                    )
+                response = self.client.models.generate_content(
+                     model="gemini-2.5-flash",
+                     contents=contents,
                 )
 
                 if (
